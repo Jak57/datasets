@@ -5,3 +5,7 @@
 * [Pure Vocabulary for Bangla - 72](https://drive.google.com/file/d/1-5RpRvD3gkdbgITc91HPlWeKsIzgPPiY/view?usp=sharing)
 * [All Words with frequency 649042](https://drive.google.com/file/d/1MZ_gIDYZ2bshe31f-nFel3b8bvN2wJju/view?usp=sharing)
 * [Jakir Arnob 18000+](https://github.com/Jak57/datasets/tree/main/buet_nmt/Annotation_JA_18000)
+
+
+# Tools
+* [Bangla nltk for vocabulary list](https://pypi.org/project/bltk/)
