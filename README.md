@@ -25,3 +25,6 @@ Datasets for Deep Learning and Machine Learning
 # Tools
 * [Bangla nltk for vocabulary list](https://pypi.org/project/bltk/)
 
+# BDSL - Dataset
+1. 
+
