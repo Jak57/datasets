@@ -26,5 +26,5 @@ Datasets for Deep Learning and Machine Learning
 * [Bangla nltk for vocabulary list](https://pypi.org/project/bltk/)
 
 # BDSL - Dataset
-1. 
+1. [All sign names from book - 3915](https://github.com/Jak57/datasets/blob/main/BDSL/BDSL_word_list_from_book_3915%20-%20BDSL_word_list.csv)
 
