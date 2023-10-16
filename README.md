@@ -27,4 +27,6 @@ Datasets for Deep Learning and Machine Learning
 
 # BDSL - Dataset
 1. [All sign names from book - 3915](https://github.com/Jak57/datasets/blob/main/BDSL/BDSL_word_list_from_book_3915%20-%20BDSL_word_list.csv)
+2. [BDSL_dataset_3951.csv - All words taken from Book of BDSL](https://github.com/Jak57/datasets/blob/main/BDSL/BDSL_dataset_3951.csv)
+3. [filenames_from_seniors_4787.csv - ALL Word annotated from seniors](https://github.com/Jak57/datasets/blob/main/BDSL/filenames_from_seniors_4787.csv)
 
