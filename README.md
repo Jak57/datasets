@@ -30,7 +30,7 @@ Datasets for Deep Learning and Machine Learning
 2. [BDSL_dataset_3951.csv - All words taken from Book of BDSL](https://github.com/Jak57/datasets/blob/main/BDSL/BDSL_dataset_3951.csv)
 3. [filenames_from_seniors_4787.csv - ALL Word annotated from seniors](https://github.com/Jak57/datasets/blob/main/BDSL/filenames_from_seniors_4787.csv)
 
-# Dataverse
+# DataTemp
 1. [common_19328.csv - word present in both test and trainset](https://github.com/Jak57/datasets/blob/main/dataverse-2023/updated_dataset/common_19328.csv)
 2. [uncommon_28725.csv - only present in test not train](https://github.com/Jak57/datasets/blob/main/dataverse-2023/updated_dataset/uncommon_28725.csv)
 3. [updated_dictionary_training_set38522.csv - updated dataset training set dictionary](https://github.com/Jak57/datasets/blob/main/dataverse-2023/updated_dataset/updated_dictionary_training_set38522.csv)
