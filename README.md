@@ -36,4 +36,5 @@ Datasets for Deep Learning and Machine Learning
 3. [updated_dictionary_training_set38522.csv - updated dataset training set dictionary](https://github.com/Jak57/datasets/blob/main/dataverse-2023/updated_dataset/updated_dictionary_training_set38522.csv)
 4. [updated_dictionary_test_set_48053.csv - test set dictionary](https://github.com/Jak57/datasets/blob/main/dataverse-2023/updated_dataset/updated_dictionary_test_set_48053.csv)
 5. [models prediction on test set - submission 2](https://docs.google.com/spreadsheets/d/1Vw2NNfo8xFxvegYktlLFuzGQryRlVLXHBtGS1gX0szA/edit?usp=sharing)
+6. [numbers in test data - 2603](https://github.com/Jak57/datasets/blob/main/dataverse-2023/number_temp_cleaned_2603.csv)
 
