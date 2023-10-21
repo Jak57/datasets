@@ -38,4 +38,5 @@ Datasets for Deep Learning and Machine Learning
 5. [models prediction on test set - submission 2](https://docs.google.com/spreadsheets/d/1Vw2NNfo8xFxvegYktlLFuzGQryRlVLXHBtGS1gX0szA/edit?usp=sharing)
 6. [model prediction on test set - submission 3](https://raw.githubusercontent.com/Jak57/datasets/main/dataverse-2023/sub3_words_ipa_previous_dataset_48053_testset.csv)
 7. [numbers in test data - 2603](https://github.com/Jak57/datasets/blob/main/dataverse-2023/number_temp_cleaned_2603.csv)
+8. [Previous dataset - train test split](https://github.com/Jak57/datasets/tree/main/dataverse-2023/previous_dataset_train_test_split)
 
