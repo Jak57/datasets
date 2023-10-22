@@ -40,4 +40,5 @@ Datasets for Deep Learning and Machine Learning
 7. [numbers in test data - 2603](https://github.com/Jak57/datasets/blob/main/dataverse-2023/number_temp_cleaned_2603.csv)
 8. [previous dataset - train test split](https://github.com/Jak57/datasets/tree/main/dataverse-2023/previous_dataset_train_test_split)
 9. [updated dataset train test split](https://github.com/Jak57/datasets/tree/main/dataverse-2023/updated_dataset_train_test_split)
+10. [char set - train, test and demo submission](https://github.com/Jak57/datasets/tree/main/dataverse-2023/previous_dataset/vocab_charset)
 
