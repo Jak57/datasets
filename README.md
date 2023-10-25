@@ -25,6 +25,22 @@ Datasets for Deep Learning and Machine Learning
 # Tools
 * [Bangla nltk for vocabulary list](https://pypi.org/project/bltk/)
 
+```
+Vowels = ['অ', 'আ', 'ই', 'ঈ', 'উ', 'ঊ', 'ঋ', 'ঌ', 'এ', 'ঐ', 'ও', 'ঔ']
+Vowel_signs = ['া', 'ি', 'ী', 'ু', 'ূ', 'ৃ', 'ৄ', 'ে', 'ৈ', 'ো', 'ৌ']
+Consonants = ['ক', 'খ', 'গ', 'ঘ', 'ঙ', 'চ', 'ছ', 'জ', 'ঝ', 'ঞ', 'ট', 'ঠ', 'ড', 'ঢ', 'ণ', 'ত', 'থ', 'দ', 'ধ', 'ন', 'প', 'ফ', 'ব', 'ভ', 'ম', 'য', 'র', 'ল', 'শ', 'ষ', 'স', 'হ', 'ড়', 'ঢ়', 'য়', 'ৎ', 'ং', 'ঃ', 'ঁ']
+Digits = ['০', '১', '২', '৩', '৪', '৫', '৬', '৭', '৮', '৯']
+Operators = ['=', '+', '-', '*', '/', '%', '<', '>', '×', '÷']
+Punctuation_marks = ['।', ',', ';', ':', '?', '!', "'", '.', '"', '-', '[', ']', '{', '}', '(', ')', '–', '—', '―', '~']
+Others = ['৳', '৺', '্', 'ঀ', 'ঽ', '#', '$']
+
+BANGLA_VOCAB = Vowels + Vowel_signs + Consonants + Digits + Operators + Punctuation_marks + Others
+
+vocab = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z', 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z']
+digits = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9']
+ENGLISH_VOCAB = vocab + digits
+```
+
 # BDSL - Dataset
 1. [All sign names from book - 3915](https://github.com/Jak57/datasets/blob/main/BDSL/BDSL_word_list_from_book_3915%20-%20BDSL_word_list.csv)
 2. [BDSL_dataset_3951.csv - All words taken from Book of BDSL](https://github.com/Jak57/datasets/blob/main/BDSL/BDSL_dataset_3951.csv)
