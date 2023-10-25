@@ -45,3 +45,4 @@ Datasets for Deep Learning and Machine Learning
 12. [model's prediction on test set - submission 4](https://raw.githubusercontent.com/Jak57/datasets/main/dataverse-2023/words_ipa_previous_dataset_48053_test_set_submission_4.csv)
 13. [updated training dataset dictionary](https://raw.githubusercontent.com/Jak57/datasets/main/dataverse-2023/train_u_dictionary_37812.csv)
 14. [dataset-char-level-pretrained model mt5, mbart](https://github.com/Jak57/datasets/tree/main/dataverse-2023/pretrained_model)
+15. [previous dataset word ipa mapping](https://raw.githubusercontent.com/Jak57/datasets/main/dataverse-2023/previous_trainset_word_ipa_map_37807.csv)
