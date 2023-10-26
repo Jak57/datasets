@@ -20,6 +20,7 @@ Datasets for Deep Learning and Machine Learning
 * [All Words with frequency 649042](https://drive.google.com/file/d/1MZ_gIDYZ2bshe31f-nFel3b8bvN2wJju/view?usp=sharing)
 * [vocab_bangla_108_nltk - initial chosen char for cleaning](https://drive.google.com/file/d/1UrArHD7qbW7L26QyZXMkk1F8n5apaiBH/view?usp=sharing)
 * [Jakir Arnob 18000+](https://github.com/Jak57/datasets/tree/main/buet_nmt/Annotation_JA_18000)
+* [sentencewise lemmatization dataset 11k](https://github.com/Jak57/datasets/tree/main/sentencewise_lemmatization_dataset)
 
 
 # Tools
