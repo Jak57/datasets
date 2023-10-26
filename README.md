@@ -22,6 +22,8 @@ Datasets for Deep Learning and Machine Learning
 * [Jakir Arnob 18000+](https://github.com/Jak57/datasets/tree/main/buet_nmt/Annotation_JA_18000)
 * [sentencewise lemmatization dataset 11k](https://github.com/Jak57/datasets/tree/main/sentencewise_lemmatization_dataset)
 
+# BaNeL
+1. [banel dataset as txt file - only unique words for tokenization](https://github.com/Jak57/datasets/blob/main/banel/banel.txt)
 
 # Tools
 * [Bangla nltk for vocabulary list](https://pypi.org/project/bltk/)
