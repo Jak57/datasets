@@ -24,6 +24,7 @@ Datasets for Deep Learning and Machine Learning
 
 # BaNeL
 1. [banel dataset as txt file - only unique words for tokenization](https://github.com/Jak57/datasets/blob/main/banel/banel.txt)
+2. [bpe tokenizer for banel - 30k](https://github.com/Jak57/datasets/blob/main/banel/tokenizer-banel.json)
 
 # Tools
 * [Bangla nltk for vocabulary list](https://pypi.org/project/bltk/)
