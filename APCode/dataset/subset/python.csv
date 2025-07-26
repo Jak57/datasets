@@ -1,0 +1,253 @@
+code,language
+"n = int(input())
+G = [[] for _ in range(n)]
+for _ in range(n-1):
+    a, b = tuple(map(lambda x: int(x)-1, input().split()))
+    G[a].append(b)
+    G[b].append(a)
+
+color = [0] * n
+color[0] = 1
+color[n-1] = -1
+from collections import deque
+q = deque([])
+q.append(0)
+q.append(n-1)
+while q:
+    node = q.popleft()
+    c = color[node]
+    for to in G[node]:
+        if color[to] == 0:
+            color[to] = c
+            q.append(to)
+
+cb = color.count(1)
+cw = color.count(-1)
+
+if cb > cw:
+    print('Fennec')
+else:
+    print('Snuke')
+",python
+"N, K = map(int, input().split())
+if K > (N - 1) * (N - 2) // 2:
+    print(-1)
+else:
+    c = 0
+    lst = []
+    for i in range(2, N+1):
+        c+=1
+        lst.append([1, i])
+    cnt = 0
+    f = 0
+    for i in range(2, N+1):
+        for j in range(i+1, N+1):
+            if cnt == (N-1)*(N-2)//2-K:
+                f=1
+                break
+            c+=1
+            cnt+=1
+            lst.append([i, j])
+        if f:
+            break
+    print(c)
+    for l in lst:
+        print(*l)",python
+"n,m = map(int,input().split())
+mod = 10**9 + 7
+l = n+1000
+fac = [1]*l
+facr = [1]*l
+
+for i in range(l-1):
+    fac[i+1] = fac[i]*(i+1)%mod
+facr[l-1] = pow(fac[l-1],mod - 2,mod)
+for i in range(1,l)[::-1]:
+    facr[i-1] = facr[i]*i%mod
+
+def combi(N,K):
+    return fac[N]*facr[N-K]%mod*facr[K]%mod
+
+prime = {}
+i = 2
+x = m
+while i*i <= m:
+    if x%i == 0:
+        prime[i] = 0
+        while x%i == 0:
+            x = x//i
+            prime[i] += 1
+    i += 1
+if x > 1:
+    prime[x] = 1
+ans = 1
+for q in prime.values():
+    ans *= combi(q+n-1,n-1)
+    ans %= mod
+print(ans)
+",python
+"import math
+import itertools
+row_length = int(input())
+point = {}
+for i in range(row_length):
+    point[i] = list(map(int, input().split()))
+point_list = [point[x] for x in range(len(point))]
+pattern_list = list(itertools.permutations(point_list))
+
+
+
+def calc_dist(pat_list): #旅程リストを入れた時に、その距離を計算する
+    dist = 0
+    for i in range(len(pat_list)-1):
+        dist += math.sqrt(pow(pat_list[i][0] - pat_list[i+1][0], 2) + pow(pat_list[i][1] - pat_list[i+1][1], 2))
+    return dist
+
+ans_dist = 0
+for j_list in pattern_list:
+    ans_dist += calc_dist(j_list)
+
+print(ans_dist/len(pattern_list))",python
+"""""""
+https://atcoder.jp/contests/tokiomarine2020/submissions/14229099
+""""""
+N,K = map(int,input().split())
+A = list(map(int,input().split()))
+
+def update(A):
+    b = [0]*N
+
+    for i,a in enumerate(A):
+        l = max(0,i-a)
+        r = min(N-1,i+a)
+
+        b[l] += 1
+        if r+1 < N:
+            b[r+1] -= 1
+    
+    res = []
+    s = 0
+    for i in b:
+        s += i
+        res.append(s)
+    return res
+
+for _ in range(min(K,75)):
+    A = update(A)
+
+print(*A)",python
+"# 色の塗り方は全部で何通りか。O(C^3)で、C^3 = 27000通り。
+# 各塗り方に対していちいち計算していると最大25000マスで、これだと間に合わない。
+# 3つに別れた各部分を各色に変えるコスト合計を前計算しておけば良い。O(C^3 + N^2 C)。
+# 一ひねりした全探索。
+
+n, c = list(map(int, input().split()))
+change_cost = [list(map(int, input().split())) for _ in range(c)]
+init_color = [list(map(int, input().split())) for _ in range(n)]
+
+cost = [[0 for _ in range(c)] for _ in range(3)]
+
+for row in range(n):
+    for col in range(n):
+        before = init_color[row][col] - 1
+        for after in range(c):
+            idx = (row + col) % 3
+            cost[idx][after] += change_cost[before][after]
+
+ans = 1000 * 500 * 500 * 10
+for ci in range(c):
+    for cj in range(c):
+        for ck in range(c):
+            if (ci != cj != ck != ci):
+                ans = min(ans, cost[0][ci] + cost[1][cj] + cost[2][ck])
+
+print(ans)
+",python
+"n = int(input())
+*A, = map(int, input().split())
+
+from itertools import product
+
+ans = 0
+for P in product(range(3), repeat=n):
+    even = 0
+    for i in range(n):
+        b = A[i] + P[i] - 1
+        even |= (b % 2) == 0
+    if even:
+        ans += 1
+print(ans)",python
+"a,b,c=map(int,input().split())
+if ((b-a)==(c-b)):
+    print (""YES"")
+else:
+    print(""NO"")",python
+"n,u,v=map(int,input().split())
+anss=0
+u-=1
+v-=1
+d=[[]for _ in range(n)]
+inf=float('inf')
+aoki=[inf]*n
+for i in range(n-1):
+  a,b=map(int,input().split())
+  a-=1
+  b-=1
+  d[a].append(b)
+  d[b].append(a)
+Q=d[v]
+aoki[v]=0
+dis=1
+visited={v}
+while Q:
+  P=[]
+  for i in Q:
+    visited.add(i)
+    for j in d[i]:
+      if j not in visited:P.append(j)
+    aoki[i]=dis
+  dis+=1
+  Q=P
+Q=d[u]
+chokudai=[-1]*n
+chokudai[u]=0
+dis=1
+visited={u}
+point=-1
+while Q:
+  P=[]
+  for i in Q:
+    visited.add(i)
+    for j in d[i]:
+      if aoki[j]<=dis+1:
+        if aoki[j]==dis+1:anss=1
+        if point<0:point=i
+        continue
+      if j not in visited:P.append(j)
+    chokudai[i]=dis
+  dis+=1
+  Q=P
+Q=d[point]
+dis=chokudai[point]+1
+visited={point}
+while Q:
+  P=[]
+  for i in Q:
+    visited.add(i)
+    if chokudai[i]==-1:continue
+    chokudai[i]=max(dis,chokudai[i])
+    for j in d[i]:
+      if j not in visited:P.append(j)
+  dis+=1
+  Q=P
+ans=0
+for i in range(n):
+  if aoki[i]>chokudai[i]:ans=max(ans,chokudai[i])
+print(ans+anss)
+#print(aoki)
+#print(chokudai)",python
+"x = int(input())
+if x == 7 or x == 5 or x == 3:
+    print('YES')
+else:
+    print('NO')",python

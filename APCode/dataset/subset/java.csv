@@ -1,0 +1,563 @@
+code,language
+"package com.reve.audio.libraries.dlls.codec.opus;
+
+import com.reve.util.LibraryLoader;
+
+public class OPUSEncoder {
+
+    static{
+            LibraryLoader.loadLibrary(""lib/audio/opus"");
+    }
+
+    private static int CommonClassID = 0;
+    private int classID;
+
+    private native void open(int classID);
+
+    private native int encode(int classID, short[] samples, int inOffset, int lenOfSamples, byte[] outputData, int outOffset);
+    private native int encodeWithBitRate(int classID, short[] samples, int inOffset, int lenOfSamples, byte[] outputData, int outOffset, int bitRate);
+
+    private native void reset(int classID);
+    private native void close(int classID);
+
+    private native void setBitRate(int bitrate);
+    private native void setSampleRate(int sampleRate);
+    private native void setFrameTime(int time);
+
+    private native void enableFEC(int classID, int packetDropPercentage);
+    private native int enableDRED(int classID, int complexity, int packetLossPercentage, int dredDuration);
+
+    public OPUSEncoder(){
+        classID = (CommonClassID++);
+        open(classID);
+    }
+    public OPUSEncoder(int sampleRate, int bitrate, int frameTime){
+        setBitRate(bitrate);
+        setSampleRate(sampleRate);
+        setFrameTime(frameTime);
+        classID = (CommonClassID++);
+        open(classID);
+    }
+
+    public int encode(short[] samples, int inOffset, int lenOfSamples, byte[] outputData, int outOffset) {
+        int len = encode(classID, samples, inOffset, lenOfSamples, outputData, outOffset);
+        return len;
+    }
+
+    public int encodeWithBitRate(short[] samples, int inOffset, int lenOfSamples, byte[] outputData, int outOffset, int bitRate) {
+        int len = encodeWithBitRate(classID, samples, inOffset, lenOfSamples, outputData, outOffset, bitRate);
+        return len;
+    }
+
+    public void enableFEC(int packetDropPercentage){
+        enableFEC(classID, packetDropPercentage);
+    }
+
+    public int enableDRED(int complexity, int packetLossPercentage, int dredDuration) {
+        return enableDRED(classID, complexity, packetLossPercentage, dredDuration);
+    }
+
+    public void reset(){
+        reset(classID);
+    }
+
+    public void close(){
+        close(classID);
+    }
+}",java
+"package com.reve.conferenceClient;
+
+import java.io.IOException;
+import java.net.DatagramPacket;
+import java.net.DatagramSocket;
+import java.net.InetAddress;
+
+public class ClientRTCPSender extends Thread {
+    private DatagramSocket socket;
+    private boolean running;
+    private InetAddress destAddress;
+    private int destPort;
+
+//    private ServerRTCP serverRTCP;
+
+    public ClientRTCPSender(String destAddress, int destPort) {
+        running = false;
+        try {
+            socket = new DatagramSocket();
+            this.destAddress = InetAddress.getByName(destAddress);
+            this.destPort = destPort;
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+//        serverRTCP = new ServerRTCP();
+    }
+
+    @Override
+    public void run() {
+        running = true;
+        DatagramPacket packet = new DatagramPacket(new byte[100], 100);
+        packet.setAddress(destAddress);
+        packet.setPort(destPort);
+//        serverRTCP.start();
+
+//        try {
+//            Thread.sleep(50);
+//        } catch (InterruptedException e) {
+//            throw new RuntimeException(e);
+//        }
+
+        while (running) {
+            //for (int i = 1; i <= Configuration.CLIENT_RTCP_SENDING_RATE; i++) {
+                try {
+                    Thread.sleep((int) (1000.0 / Configuration.CLIENT_RTCP_SENDING_RATE));
+                    RTCPPacket rtcpPacket = new RTCPPacket();
+                    byte[] data = rtcpPacket.getRTCPPacketData();
+                    packet.setData(data, 0, data.length);
+                    socket.send(packet);
+//                    this.serverRTCP.socket.send(packet);
+                    Thread.sleep((int) (1000.0 / Configuration.CLIENT_RTCP_SENDING_RATE));
+                } catch (IOException | InterruptedException e) {
+                    e.printStackTrace();
+                }
+            //}
+        }
+    }
+
+    public void shutDown() {
+        running = false;
+        try {
+            socket.close();
+        } catch (Exception ignored) {}
+        this.interrupt();
+    }
+}",java
+"package org.example;
+
+import java.io.IOException;
+import java.net.*;
+
+/**
+ * Sends RTCP packets to the Server
+ */
+public class ClientRTCPSender extends Thread {
+    private boolean running;
+    private InetAddress destAddress; // Server's address
+    private int destPort; // Server's RTCP port
+    private ClientRTCPReceiver clientRTCPReceiver;
+
+    public ClientRTCPSender(String destAddress, int destPort) {
+        running = false;
+        try {
+            this.destAddress = InetAddress.getByName(destAddress);
+            this.destPort = destPort;
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+        clientRTCPReceiver = new ClientRTCPReceiver();
+    }
+
+    @Override
+    public void run() {
+        running = true;
+        DatagramPacket packet = new DatagramPacket(new byte[100], 100);
+        packet.setAddress(destAddress);
+        packet.setPort(destPort);
+        // Staring Client's RTCP receiver thread
+        clientRTCPReceiver.start();
+
+        while (running) {
+            try {
+                Thread.sleep((int) (1000.0 / Configuration.CLIENT_RTCP_SENDING_RATE));
+                // Creating RTCP packet
+                RTCPPacket rtcpPacket = new RTCPPacket();
+                byte[] data = rtcpPacket.getRTCPPacketData();
+                packet.setData(data, 0, data.length);
+                // Sending RTCP packet to the server
+                this.clientRTCPReceiver.socket.send(packet);
+            } catch (IOException | InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+    public void shutDown() {
+        running = false;
+        try {
+            this.clientRTCPReceiver.socket.close();
+        } catch (Exception ignored) {}
+        this.interrupt();
+    }
+}",java
+"package com.reve.audio.libraries.dlls.audio_filters.webrtc;
+
+public class WebrtcAPM {
+
+    static {
+        System.loadLibrary(""webrtc_apm"");
+        System.loadLibrary(""webrtc_updated_agc_aec"");
+    }
+
+    private static int ID = 0;
+    private int classID;
+
+    private native int createWebrtcAPM(int classID, int sampleRate, int channel);
+    private native int setParameterWebrtcAPM(int classID, int type, float value);
+    private native int  initiateWebrtcAPM(int classID);
+    private native int processStreamWebrtcAPM(int classID, short [] inputData, int offset, int inputLength);
+    private native int feedPlayedDataWebrtcAPM(int classID, short [] inputData, int offset, int inputLength);
+    private native int destroyWebrtcAPM(int classID);
+
+    public WebrtcAPM(int sampleRate, int channel){
+        classID = getNewID();
+        createWebrtcAPM(classID, sampleRate, channel);
+    }
+
+    public void setParameter(int type, float value) {
+        this.setParameterWebrtcAPM(classID, type, value);
+    }
+
+    public void setParameter(WebrtcApmConfig config) {
+        // Configure AGC2
+        setParameter(WebrtcApmConfig.PARAM_GAIN_CONTROLLER2_ENABLED, config.getGainController2Enabled());
+        setParameter(WebrtcApmConfig.PARAM_GAIN_CONTROLLER2_ADAPTIVE_DIGITAL_ENABLED, config.getGainController2AdaptiveDigitalEnabled());
+
+        setParameter(WebrtcApmConfig.PARAM_VAD_PROBABILITY_ATTACK, config.getVadProbabilityAttack());
+        setParameter(WebrtcApmConfig.PARAM_LEVEL_ESTIMATOR_ADJACENT_SPEECH_FRAMES_THRESHOLD, config.getLevelEstimatorAdjacentSpeechFramesThreshold());
+        setParameter(WebrtcApmConfig.PARAM_EXTRA_SATURATION_MARGIN_DB, config.getExtraSaturationMarginDb());
+        setParameter(WebrtcApmConfig.PARAM_GAIN_APPLIER_ADJACENT_SPEECH_FRAMES_THRESHOLD, config.getGainApplierAdjacentSpeechFrameThreshold());
+        setParameter(WebrtcApmConfig.PARAM_MAX_GAIN_CHANGE_DB_PER_SECOND, config.getMaxGainChangeDbPerSecond());
+        setParameter(WebrtcApmConfig.PARAM_MAX_OUTPUT_NOISE_LEVEL_DBFS, config.getMaximumOutputNoiseLevelDbfs());
+
+        // Configure NS
+        setParameter(WebrtcApmConfig.PARAM_NOISE_SUPPRESSION_ENABLED, config.getNoiseSuppressionEnabled());
+        setParameter(WebrtcApmConfig.PARAM_NOISE_SUPPRESSION_LEVEL_K_HIGH, config.getNoiseSuppressionLevelKHigh());
+
+        // Configure AEC3
+        setParameter(WebrtcApmConfig.PARAM_ECHO_CANCELLER_ENABLED, config.getEchoCancellerEnabled());
+    }
+
+    public int initiate() {
+        return this.initiateWebrtcAPM(classID);
+    }
+
+    public int processStream(short [] inputData, int offset, int inputLength){
+        return processStreamWebrtcAPM(classID, inputData, offset, inputLength);
+    }
+
+    public int feedPlayedData(short [] inputData, int offset, int inputLength){
+        return feedPlayedDataWebrtcAPM(classID, inputData, offset, inputLength);
+    }
+
+    public int destroy(){
+        return destroyWebrtcAPM(classID);
+    }
+
+    private static synchronized int getNewID(){
+        return ID++;
+    }
+}",java
+"import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.net.Socket;
+
+public class Client {
+    public static void main(String[] args) throws IOException {
+        Socket clientSocket = new Socket(""127.0.0.1"", 22222);
+        System.out.println(""Client connected..."");
+
+        ObjectOutputStream oos = new ObjectOutputStream(clientSocket.getOutputStream());
+        ObjectInputStream ois = new ObjectInputStream(clientSocket.getInputStream());
+
+        new WriterThread(oos, clientSocket);
+        new ReaderThread(ois);
+    }
+}",java
+"package com.reve.hilbertTransform;
+
+import hageldave.ezfftw.dp.FFT;
+import org.apache.commons.math3.complex.Complex;
+
+public class HilbertTransformer {
+
+    /***
+     * Applies Hilbert transformation using FFT, based on SciPy's Marple implementation
+     * @param waveform Signal in time domain
+     * @return Analytical signal, real values are original signal and imaginary values are hilbert transformed signal
+     */
+    public static Complex[] transform(double[] waveform) {
+        double[] real = new double[waveform.length];
+        double[] imaginary = new double[waveform.length];
+
+        FFT.fft(waveform, real, imaginary, waveform.length);
+        double[] conv = new double[waveform.length];
+
+        if (waveform.length % 2 == 0) {
+            conv[0] = 1;
+            for (int i = 1; i < waveform.length / 2; i++) {
+                conv[i] = 2;
+            }
+            conv[waveform.length / 2] = 1;
+        } else {
+            conv[0] = 1;
+            for (int i = 1; i < (waveform.length + 1) / 2; i++) {
+                conv[i] = 2;
+            }
+        }
+
+        double[] hilbertReal = new double[waveform.length];
+        double[] hilbertImaginary = new double[waveform.length];
+
+        for (int i = 0; i < waveform.length; i++) {
+            hilbertReal[i] = real[i] * conv[i];
+            hilbertImaginary[i] = imaginary[i] * conv[i];
+        }
+
+        double[] outputReal = new double[waveform.length];
+        double[] outputImaginary = new double[waveform.length];
+
+        FFT.ifft(hilbertReal, hilbertImaginary, outputReal, outputImaginary, waveform.length);
+
+        Complex[] result = new Complex[waveform.length];
+        for (int i = 0; i < waveform.length; i++) {
+            result[i] = new Complex(outputReal[i]/ waveform.length, outputImaginary[i]/ waveform.length) ;
+        }
+
+        return result;
+    }
+
+}",java
+"package com.reve.audio.libraries.dlls.audio_filters.webrtc;
+
+public class WebrtcAgc2Config {
+
+    public static final int PARAM_VAD_PROBABILITY_ATTACK                             =   1;
+    public static final int PARAM_LEVEL_ESTIMATOR_ADJACENT_SPEECH_FRAMES_THRESHOLD   =   2;
+    public static final int PARAM_EXTRA_SATURATION_MARGIN_DB                         =   3;
+    public static final int PARAM_GAIN_APPLIER_ADJACENT_SPEECH_FRAMES_THRESHOLD      =   4;
+    public static final int PARAM_MAX_GAIN_CHANGE_DB_PER_SECOND                      =   5;
+    public static final int PARAM_MAX_OUTPUT_NOISE_LEVEL_DBFS                        =   6;
+
+    private float vadProbabilityAttack;
+    private int levelEstimatorAdjacentSpeechFramesThreshold;
+    private float extraSaturationMarginDb;
+    private int gainApplierAdjacentSpeechFrameThreshold;
+    private float maxGainChangeDbPerSecond;
+    private float maximumOutputNoiseLevelDbfs;
+
+    public WebrtcAgc2Config() {
+        this.vadProbabilityAttack = 0.6F;
+        this.levelEstimatorAdjacentSpeechFramesThreshold = 3;
+        this.extraSaturationMarginDb = 5;
+        this.gainApplierAdjacentSpeechFrameThreshold = 1;
+        this.maxGainChangeDbPerSecond = 2;
+        this.maximumOutputNoiseLevelDbfs = -75;
+    }
+
+    public float getVadProbabilityAttack() {
+        return vadProbabilityAttack;
+    }
+
+    public void setVadProbabilityAttack(float vadProbabilityAttack) {
+        this.vadProbabilityAttack = vadProbabilityAttack;
+    }
+
+    public int getLevelEstimatorAdjacentSpeechFramesThreshold() {
+        return levelEstimatorAdjacentSpeechFramesThreshold;
+    }
+
+    public void setLevelEstimatorAdjacentSpeechFramesThreshold(int levelEstimatorAdjacentSpeechFramesThreshold) {
+        this.levelEstimatorAdjacentSpeechFramesThreshold = levelEstimatorAdjacentSpeechFramesThreshold;
+    }
+
+    public float getExtraSaturationMarginDb() {
+        return extraSaturationMarginDb;
+    }
+
+    public void setExtraSaturationMarginDb(float extraSaturationMarginDb) {
+        this.extraSaturationMarginDb = extraSaturationMarginDb;
+    }
+
+    public int getGainApplierAdjacentSpeechFrameThreshold() {
+        return gainApplierAdjacentSpeechFrameThreshold;
+    }
+
+    public void setGainApplierAdjacentSpeechFrameThreshold(int gainApplierAdjacentSpeechFrameThreshold) {
+        this.gainApplierAdjacentSpeechFrameThreshold = gainApplierAdjacentSpeechFrameThreshold;
+    }
+
+    public float getMaxGainChangeDbPerSecond() {
+        return maxGainChangeDbPerSecond;
+    }
+
+    public void setMaxGainChangeDbPerSecond(float maxGainChangeDbPerSecond) {
+        this.maxGainChangeDbPerSecond = maxGainChangeDbPerSecond;
+    }
+
+    public float getMaximumOutputNoiseLevelDbfs() {
+        return maximumOutputNoiseLevelDbfs;
+    }
+
+    public void setMaximumOutputNoiseLevelDbfs(float maximumOutputNoiseLevelDbfs) {
+        this.maximumOutputNoiseLevelDbfs = maximumOutputNoiseLevelDbfs;
+    }
+}",java
+"package com.reve.mixing;
+
+import com.reve.util.AudioFrameShort;
+
+import java.util.ArrayList;
+
+public class AlignToRMSServer {
+
+    private int shortFrameLen;
+    private long inputRMS;
+    private long mixedRMS;
+    private double lambda;
+    private long[] trueMixer;
+//    private long[] sumOfSquaredAmplitudeParticipantList;
+    private final int MAX_PARTICIPANT_IN_MIXING = 10;
+
+    public AlignToRMSServer(int shortFrameLen) {
+        this.shortFrameLen = shortFrameLen;
+        this.trueMixer = new long[shortFrameLen];
+//        this.sumOfSquaredAmplitudeParticipantList = new long[MAX_PARTICIPANT_IN_MIXING];
+    }
+
+    public int applyAlignToRMSServer(ArrayList<AudioFrameShort> shortFrameList, int topN_participants, ArrayList<short[]> outputList, int outOffset, boolean isTotalMixedStreamNeeded) {
+
+        long t1 = System.nanoTime();
+        if (shortFrameList.isEmpty() || outputList.size() <= topN_participants)
+            return 0;
+        else if (shortFrameList.size() == 1) {
+            System.arraycopy(shortFrameList.get(0).data, 0, outputList.get(0), outOffset, shortFrameList.get(0).len);
+            return shortFrameList.get(0).len;
+        }
+
+        // Calculate True Mixer Output
+        for (int i = 0; i < shortFrameLen; i++) {
+            trueMixer[i] = 0;
+            for (int j = 0; j < topN_participants; j++) {
+                trueMixer[i] += shortFrameList.get(j).data[i];;
+            }
+        }
+
+//        // Calculate sum of squared amplitude for each participants
+//        for (int i = 0; i < topN_participants; i++) {
+//            sumOfSquaredAmplitudeParticipantList[i] = 0;
+//            for (int j = 0; j < shortFrameLen; j++) {
+//                sumOfSquaredAmplitudeParticipantList[i] += (shortFrameList.get(i).data[j] * shortFrameList.get(i).data[j]);
+//            }
+//        }
+
+        // For every PSTN participant calculate the mixed stream without considering that participant
+        for (int i = 0; i < topN_participants; i++) {
+            if (!shortFrameList.get(i).isPstnClient) continue;
+            AudioFrameShort frame = shortFrameList.get(i);
+
+            inputRMS = 0;
+            for (int j = 0; j < topN_participants; j++) {
+                if (i == j) continue;
+//                inputRMS += sumOfSquaredAmplitudeParticipantList[j];
+                inputRMS += (shortFrameLen * frame.rmsEnergy * frame.rmsEnergy);
+
+            }
+
+            mixedRMS = 0;
+            for (int j = 0; j < shortFrameList.get(i).len; j++) {
+                mixedRMS += (long) Math.pow((trueMixer[j] - shortFrameList.get(i).data[j]), 2);
+            }
+
+            lambda = Math.sqrt(inputRMS / (mixedRMS * 1.0 * (topN_participants - 1)));
+
+            if ((mixedRMS * (topN_participants - 1) == 0)) return shortFrameLen;
+
+            // Placing mixed stream in the output array
+            for (int j = 0; j < shortFrameLen; j++) {
+                if (outOffset + j >= outputList.get(i).length) {
+                    break;
+                }
+                outputList.get(i)[outOffset + j] = (short) ((trueMixer[j] - shortFrameList.get(i).data[j]) * lambda);
+            }
+        }
+
+        // Calculating total mixed audio stream
+        if (isTotalMixedStreamNeeded) {
+            inputRMS = 0;
+            for (int i = 0; i < topN_participants; i++) {
+                AudioFrameShort frame = shortFrameList.get(i);
+                inputRMS += (shortFrameLen * frame.rmsEnergy * frame.rmsEnergy);
+            }
+
+            mixedRMS = 0;
+            for (int i = 0; i < shortFrameLen; i++) {
+                mixedRMS += (trueMixer[i] * trueMixer[i]);
+            }
+
+            lambda = Math.sqrt(inputRMS / (topN_participants * mixedRMS * 1.0));
+
+            // Placing mixed stream in the output array
+            for (int i = 0; i < shortFrameLen; i++) {
+                if (outOffset + i >= outputList.get(topN_participants).length) {
+                    break;
+                }
+                outputList.get(topN_participants)[outOffset + i] = (short) (trueMixer[i] * lambda);
+            }
+        }
+        long t2 = System.nanoTime();
+        System.out.println(""time taken : ""+(t2-t1)+"" nano seconds"");
+        return shortFrameLen;
+    }
+}",java
+"package com.reve.cng;
+
+import java.util.Random;
+
+public class ComfortNoiseGeneration {
+    private double noiseLevelLinear;
+    private double noise;
+    private int noisySample;
+    Random random;
+
+    public ComfortNoiseGeneration(double noiseLevelDb) {
+        this.noiseLevelLinear = dBToAmplitude(noiseLevelDb);
+        this.random = new Random();
+    }
+
+    public void applyComfortNoiseGeneration(short[] encodeShortBuffer, int inputOffset, int inputLength) {
+        for (int i = 0; i < inputLength; i++) {
+            noise = random.nextGaussian() * Short.MAX_VALUE * noiseLevelLinear;
+            noisySample = encodeShortBuffer[i + inputOffset] + (int) noise;
+            encodeShortBuffer[i + inputOffset] = (short) Math.max(Short.MIN_VALUE, Math.min(Short.MAX_VALUE, noisySample));
+        }
+    }
+
+    private static double dBToAmplitude(double db) {
+        return Math.pow(10, (db / 20));
+    }
+}",java
+"import java.io.IOException;
+import java.io.ObjectInputStream;
+
+public class ReaderThread implements Runnable {
+    ObjectInputStream ois;
+    Thread t;
+
+    ReaderThread(ObjectInputStream ois) {
+        this.ois = ois;
+        t = new Thread(this);
+        t.start();
+    }
+
+    @Override
+    public void run() {
+        while (true) {
+            try {
+                Object sMsg = ois.readObject();
+                System.out.println(""CLIENT received: "" + (String) sMsg);
+            } catch (ClassNotFoundException | IOException e) {
+                throw new RuntimeException(e);
+            }
+        }
+    }
+}",java

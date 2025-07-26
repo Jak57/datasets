@@ -1,0 +1,526 @@
+code,language
+"#include<bits/stdc++.h>
+using namespace std;
+
+typedef long long ll;
+
+void solve()
+{
+    int n, i, j, num;
+    vector<int> v;
+
+    for (i = 0; i < 3; i++) {
+        cin>> num;
+        v.push_back(num);
+    }
+    sort(v.begin(), v.end());
+    cout<< v[1] << ""\n"";
+}
+
+int main()
+{
+    int t = 1;
+    cin>> t;
+
+    while (t--)
+        solve();
+
+    return 0;
+}",c++
+"#include<bits/stdc++.h>
+using namespace std;
+
+typedef long long ll;
+
+void solve()
+{
+    int n, i, j, k, cnt, mx = 1;
+    cin>> n >> k;
+    vector<int> v(n);
+    for (i = 0; i < n; i++)
+        cin>> v[i];
+    sort(v.begin(), v.end());
+    for (i = 0; i < n; ) {
+        cnt = 0;
+        for (j = i; j < n-1; j++) {
+            if (v[j+1] - v[j] <= k)
+                cnt++;
+            else
+                break;
+        }
+        i = j+1;
+        mx = max(cnt+1, mx);
+    }
+    cout<< n-mx << ""\n"";
+}
+
+int main()
+{
+    ios_base::sync_with_stdio(0);
+    cin.tie(0);
+    int t = 1, i;
+    cin>> t;
+    while (t--)
+        solve();
+    return 0;
+}",c++
+"#include<bits/stdc++.h>
+using namespace std;
+
+typedef long long ll;
+
+void solve()
+{
+    const int N = 200005;
+    int n, k, q, arr[N], pos[N], i, j, one = 0, zero = 0, cnt;
+    ll tmp, ans;
+    cin>> n >> k >> q;
+
+    for (i = 1; i <= n; i++) {
+        cin>> arr[i];
+        if (arr[i] <= q) {
+            pos[i] = 1;
+            one++;
+        }
+        else {
+            pos[i] = 0;
+            zero++;
+        }
+    }
+
+    if (one == n) {
+        tmp = ll(n-k+1);
+        ans = (tmp*(tmp+1))/2;
+        cout<< ans << ""\n"";
+        return;
+    } else if (zero == n) {
+        cout<< 0 << ""\n"";
+        return;
+    }
+
+    vector<int> v;
+    for (i = 1; i <= n; ) {
+        if (pos[i] == 1) {
+            cnt = 0;
+            while (i <= n && pos[i] == 1) {
+                cnt++;
+                i++;
+            }
+            if (cnt >= k) v.push_back(cnt);
+        }
+        else
+            i++;
+    }
+
+    if (v.size() == 0) {
+        cout<< 0 << ""\n"";
+        return;
+    }
+
+    ans = 0;
+    for (i = 0; i < v.size(); i++) {
+        tmp = ll(v[i]-k+1);
+        ans += (tmp*(tmp+1))/2;
+    }
+    cout<< ans << ""\n"";
+}
+
+int main()
+{
+    int i, T = 1;
+    cin>> T;
+    while (T--)
+        solve();
+    return 0;
+}",c++
+"#include<bits/stdc++.h>
+using namespace std;
+
+typedef long long ll;
+
+void solve()
+{
+    int n, k, i, j, num, arr[400];
+    cin>> n >> k;
+    for (i = 1; i <= n; i++)
+        cin>> arr[i];
+
+    deque<int> q;
+    for (i = 1; i <= n; i++) {
+        deque<int> q_copy;
+        if (i == 1) {
+            q.push_front(arr[i]);
+            continue;
+        }
+        q_copy = q;
+        bool found = false;
+        while(!q_copy.empty()) {
+            if (q_copy.front() == arr[i]) {
+                found = true;
+                break;
+            }
+            q_copy.pop_front();
+        }
+
+        if (found)
+            continue;
+
+        if (q.size() < k)
+            q.push_front(arr[i]);
+        else {
+            q.pop_back();
+            q.push_front(arr[i]);
+        }
+
+    }
+
+    cout<< q.size() << ""\n"";
+    while (!q.empty()) {
+        cout<< q.front() << "" "";
+        q.pop_front();
+    }
+    cout<< ""\n"";
+}
+
+int main()
+{
+    int t = 1;
+    //cin>> t;
+
+    while (t--)
+        solve();
+
+    return 0;
+}",c++
+"#include<bits/stdc++.h>
+using namespace std;
+
+typedef long long ll;
+
+void solve()
+{
+    int n, i, j, cnt0, cnt1, tmp_cnt;
+    ll ans, x, y, ans1;
+    string s;
+    cin>> n >> s;
+
+    cnt0 = cnt1 = 0;
+    for (i = 0; i < n; ) {
+        if (s[i] == '1') {
+            tmp_cnt = 0;
+            for (j = i; j < n; j++) {
+                if (s[j] == '1')
+                    tmp_cnt++;
+                else
+                    break;
+            }
+
+            cnt1 = max(cnt1, tmp_cnt);
+            i = j;
+        }
+        else
+            i++;
+    }
+
+    for (i = 0; i < n; ) {
+        if (s[i] == '0') {
+            tmp_cnt = 0;
+            for (j = i; j < n; j++) {
+                if (s[j] == '0')
+                    tmp_cnt++;
+                else
+                    break;
+            }
+
+            cnt0 = max(cnt0, tmp_cnt);
+            i = j;
+        }
+        else
+            i++;
+    }
+
+    x = ll(cnt0) * ll(cnt0);
+    y = ll(cnt1) * ll(cnt1);
+    ans = max(x, y);
+
+    cnt0 = cnt1 = 0;
+    for (i = 0; i < n; i++) {
+        if (s[i] == '0')
+            cnt0++;
+        else
+            cnt1++;
+    }
+
+    ans1 = ll(cnt0) * ll(cnt1);
+    ans = max(ans, ans1);
+    cout<< ans << ""\n"";
+}
+
+int main()
+{
+    int t = 1;
+    cin>> t;
+
+    while (t--)
+        solve();
+
+    return 0;
+}",c++
+"#include<bits/stdc++.h>
+using namespace std;
+
+typedef long long ll;
+
+void solve()
+{
+    ll xk, yk, xq, yq, a, b, x_val, y_val;
+    cin>> a >> b >> xk >> yk >> xq >> yq;
+
+    ll x[8] = {-b, b, a, a, -a, -a, b, -b};
+    ll y[8] = {a, a, b, -b, -b, b, -a, -a};
+    int i, j;
+    set< pair<ll, ll> > p1, p2;
+    for (i = 0; i < 8; i++) {
+        x_val = xk + x[i];
+        y_val = yk + y[i];
+        //cout<< x_val << "" "" << y_val << ""\n"";
+        p1.insert(make_pair(x_val, y_val));
+    }
+    //cout<< ""\n"";
+
+    int cnt = 0;
+    for (i = 0; i < 8; i++) {
+        x_val = xq + x[i];
+        y_val = yq + y[i];
+        //cout<< x_val << "" "" << y_val << ""\n"";
+        p2.insert(make_pair(x_val, y_val));
+//        for (j = 0; j < p1.size(); j++) {
+//            if (p1[j].first == x_val && p1[j].second == y_val) {
+//                cnt += 1;
+//                cout<<
+//            }
+//                // cnt += 1;
+//        }
+    }
+//    //cout<< cnt << ""\n"";
+//    cout<< ""\n\n"";
+//    cout<< ""---------- "" << p1.size() << "" "" << p2.size() << ""\n"";
+    set< pair<ll, ll> >::iterator it1, it2;
+    for (it1 = p1.begin(); it1 != p1.end(); it1++) {
+            //cout<< it1->first << "" "" << it1->second << ""\n"";
+
+//        for (j = 0; j < p2.size(); j++) {
+//            if (it->first == p2[first && p1[i].second == p2[j].second)
+//                cnt += 1;
+//        }
+        for (it2 = p2.begin(); it2 != p2.end(); it2++) {
+            if (it1->first == it2->first && it1->second == it2->second)
+                cnt += 1;
+        }
+    }
+    //cout<< ""------cnt "" << cnt << ""\n"";
+    cout<< cnt << ""\n"";
+}
+
+int main()
+{
+    int t = 1;
+    cin>> t;
+
+    while (t--)
+        solve();
+
+    return 0;
+}",c++
+"#include<bits/stdc++.h>
+using namespace std;
+
+typedef long long ll;
+
+void solve()
+{
+    int n, i, j, val;
+    cin>> n;
+    vector<int> v;
+    int arr[n+1];
+    memset(arr, 0, sizeof(arr));
+    for (i = 1; i <= n; i++) {
+        cin>> val;
+        if (val <= n)
+            arr[val] += 1;
+    }
+    int hop[n+1], start, len;
+    memset(hop, 0, sizeof(hop));
+    for (i = 1; i <= n; i++) {
+        if (arr[i] > 0) {
+            for (j = i; j <= n; j += i)
+                hop[j] += arr[i];
+        }
+    }
+    int mx = -1;
+    for (i = 1; i <= n; i++)
+        mx = max(mx, hop[i]);
+    cout<< mx << ""\n"";
+}
+
+int main()
+{
+    ios_base::sync_with_stdio(0);
+    cin.tie(0);
+    int t = 1, i;
+    cin>> t;
+    while (t--)
+        solve();
+    return 0;
+}",c++
+"#include<bits/stdc++.h>
+using namespace std;
+
+typedef long long ll;
+
+void solve(int t)
+{
+    int n, m, i, j, mx, nmx, low, high, cur;
+    string s, l, r;
+    char ch;
+    cin>> s >> m >> l >> r;
+
+    n = s.size();
+    mx = 0;
+    for (i = 0; i < m; i++)
+    {
+        low = l[i] - '0';
+        high = r[i] - '0';
+        nmx = mx;
+        for (j = low; j <= high; j++)
+        {
+            cur = mx;
+            while (cur < n && s[cur]-'0' != j)
+                cur += 1;
+
+            nmx = max(nmx, cur);
+        }
+        mx = nmx + 1;
+    }
+    if (mx > n)
+        printf(""YES\n"");
+    else
+        printf(""NO\n"");
+}
+
+int main()
+{
+    int test_case = 1, t;
+    cin>> test_case;
+
+    for (t = 1; t <= test_case; t++)
+        solve(t);
+
+    return 0;
+}
+ ",c++
+"// Bismillah
+#include<bits/stdc++.h>
+using namespace std;
+
+typedef long long ll;
+
+void solve()
+{
+    int i, j, n;
+    string s;
+    for (i = 0; i < 3; i++) {
+        cin>> s;
+        char ch = '?';
+        for (j = 0; j < 3; j++) {
+            if (s[j] == ch) {
+                bool founda = false;
+                if (s[0] == 'A' || s[1] == 'A' || s[2] == 'A')
+                    founda = true;
+                bool foundb = false;
+                if (s[0] == 'B' || s[1] == 'B' || s[2] == 'B')
+                    foundb = true;
+                bool foundc = false;
+                if (s[0] == 'C' || s[1] == 'C' || s[2] == 'C')
+                    foundc = true;
+
+                if (!founda)
+                    cout<< ""A"" << ""\n"";
+                else if (!foundb)
+                    cout<< ""B"" << ""\n"";
+                else
+                    cout<< ""C"" << ""\n"";
+            }
+        }
+    }
+}
+
+int main()
+{
+    int t = 1;
+    ios_base::sync_with_stdio(false);
+    cin.tie(0);
+    cin>> t;
+    while (t--)
+        solve();
+    return 0;
+}
+ ",c++
+"#include<bits/stdc++.h>
+using namespace std;
+
+typedef long long ll;
+
+void solve()
+{
+    int n, sum, arr[50000], num, total = 0, i, last, j, large = -1;
+    cin>> n >> sum;
+
+    memset(arr, 0, sizeof(arr));
+    for (i = 0; i < n; i++) {
+        cin>> num;
+        large = max(large, num);
+        arr[num] = 1;
+    }
+
+    for (i = large; i >= 1; i--) {
+        if (arr[i] == 0)
+            total += i;
+    }
+
+    if (total == sum)
+    {
+        cout<< ""YES"" << ""\n"";
+        return;
+    }
+
+    bool found = false;
+    for (i = large+1; i <= 10000; i++) {
+        total += i;
+        if (total < sum)
+            continue;
+
+        if (total == sum) {
+            found = true;
+        }
+        break;
+    }
+
+    if (found)
+        cout<< ""YES"" << ""\n"";
+    else
+        cout<< ""NO"" << ""\n"";
+}
+
+int main()
+{
+    // ios_base::sync_with_stdio(0);
+    // cin.tie(0);
+    int t = 1;
+    cin>> t;
+
+    while (t--)
+        solve();
+
+    return 0;
+}",c++
