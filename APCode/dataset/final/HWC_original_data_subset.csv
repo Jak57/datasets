@@ -1,0 +1,1340 @@
+id,language,code
+1,c++,"#include<bits/stdc++.h>
+using namespace std;
+
+typedef long long ll;
+
+void solve()
+{
+    int n, i, j, num;
+    vector<int> v;
+
+    for (i = 0; i < 3; i++) {
+        cin>> num;
+        v.push_back(num);
+    }
+    sort(v.begin(), v.end());
+    cout<< v[1] << ""\n"";
+}
+
+int main()
+{
+    int t = 1;
+    cin>> t;
+
+    while (t--)
+        solve();
+
+    return 0;
+}"
+2,c++,"#include<bits/stdc++.h>
+using namespace std;
+
+typedef long long ll;
+
+void solve()
+{
+    int n, i, j, k, cnt, mx = 1;
+    cin>> n >> k;
+    vector<int> v(n);
+    for (i = 0; i < n; i++)
+        cin>> v[i];
+    sort(v.begin(), v.end());
+    for (i = 0; i < n; ) {
+        cnt = 0;
+        for (j = i; j < n-1; j++) {
+            if (v[j+1] - v[j] <= k)
+                cnt++;
+            else
+                break;
+        }
+        i = j+1;
+        mx = max(cnt+1, mx);
+    }
+    cout<< n-mx << ""\n"";
+}
+
+int main()
+{
+    ios_base::sync_with_stdio(0);
+    cin.tie(0);
+    int t = 1, i;
+    cin>> t;
+    while (t--)
+        solve();
+    return 0;
+}"
+3,c++,"#include<bits/stdc++.h>
+using namespace std;
+
+typedef long long ll;
+
+void solve()
+{
+    const int N = 200005;
+    int n, k, q, arr[N], pos[N], i, j, one = 0, zero = 0, cnt;
+    ll tmp, ans;
+    cin>> n >> k >> q;
+
+    for (i = 1; i <= n; i++) {
+        cin>> arr[i];
+        if (arr[i] <= q) {
+            pos[i] = 1;
+            one++;
+        }
+        else {
+            pos[i] = 0;
+            zero++;
+        }
+    }
+
+    if (one == n) {
+        tmp = ll(n-k+1);
+        ans = (tmp*(tmp+1))/2;
+        cout<< ans << ""\n"";
+        return;
+    } else if (zero == n) {
+        cout<< 0 << ""\n"";
+        return;
+    }
+
+    vector<int> v;
+    for (i = 1; i <= n; ) {
+        if (pos[i] == 1) {
+            cnt = 0;
+            while (i <= n && pos[i] == 1) {
+                cnt++;
+                i++;
+            }
+            if (cnt >= k) v.push_back(cnt);
+        }
+        else
+            i++;
+    }
+
+    if (v.size() == 0) {
+        cout<< 0 << ""\n"";
+        return;
+    }
+
+    ans = 0;
+    for (i = 0; i < v.size(); i++) {
+        tmp = ll(v[i]-k+1);
+        ans += (tmp*(tmp+1))/2;
+    }
+    cout<< ans << ""\n"";
+}
+
+int main()
+{
+    int i, T = 1;
+    cin>> T;
+    while (T--)
+        solve();
+    return 0;
+}"
+4,c++,"#include<bits/stdc++.h>
+using namespace std;
+
+typedef long long ll;
+
+void solve()
+{
+    int n, k, i, j, num, arr[400];
+    cin>> n >> k;
+    for (i = 1; i <= n; i++)
+        cin>> arr[i];
+
+    deque<int> q;
+    for (i = 1; i <= n; i++) {
+        deque<int> q_copy;
+        if (i == 1) {
+            q.push_front(arr[i]);
+            continue;
+        }
+        q_copy = q;
+        bool found = false;
+        while(!q_copy.empty()) {
+            if (q_copy.front() == arr[i]) {
+                found = true;
+                break;
+            }
+            q_copy.pop_front();
+        }
+
+        if (found)
+            continue;
+
+        if (q.size() < k)
+            q.push_front(arr[i]);
+        else {
+            q.pop_back();
+            q.push_front(arr[i]);
+        }
+
+    }
+
+    cout<< q.size() << ""\n"";
+    while (!q.empty()) {
+        cout<< q.front() << "" "";
+        q.pop_front();
+    }
+    cout<< ""\n"";
+}
+
+int main()
+{
+    int t = 1;
+    //cin>> t;
+
+    while (t--)
+        solve();
+
+    return 0;
+}"
+5,c++,"#include<bits/stdc++.h>
+using namespace std;
+
+typedef long long ll;
+
+void solve()
+{
+    int n, i, j, cnt0, cnt1, tmp_cnt;
+    ll ans, x, y, ans1;
+    string s;
+    cin>> n >> s;
+
+    cnt0 = cnt1 = 0;
+    for (i = 0; i < n; ) {
+        if (s[i] == '1') {
+            tmp_cnt = 0;
+            for (j = i; j < n; j++) {
+                if (s[j] == '1')
+                    tmp_cnt++;
+                else
+                    break;
+            }
+
+            cnt1 = max(cnt1, tmp_cnt);
+            i = j;
+        }
+        else
+            i++;
+    }
+
+    for (i = 0; i < n; ) {
+        if (s[i] == '0') {
+            tmp_cnt = 0;
+            for (j = i; j < n; j++) {
+                if (s[j] == '0')
+                    tmp_cnt++;
+                else
+                    break;
+            }
+
+            cnt0 = max(cnt0, tmp_cnt);
+            i = j;
+        }
+        else
+            i++;
+    }
+
+    x = ll(cnt0) * ll(cnt0);
+    y = ll(cnt1) * ll(cnt1);
+    ans = max(x, y);
+
+    cnt0 = cnt1 = 0;
+    for (i = 0; i < n; i++) {
+        if (s[i] == '0')
+            cnt0++;
+        else
+            cnt1++;
+    }
+
+    ans1 = ll(cnt0) * ll(cnt1);
+    ans = max(ans, ans1);
+    cout<< ans << ""\n"";
+}
+
+int main()
+{
+    int t = 1;
+    cin>> t;
+
+    while (t--)
+        solve();
+
+    return 0;
+}"
+6,c++,"#include<bits/stdc++.h>
+using namespace std;
+
+typedef long long ll;
+
+void solve()
+{
+    ll xk, yk, xq, yq, a, b, x_val, y_val;
+    cin>> a >> b >> xk >> yk >> xq >> yq;
+
+    ll x[8] = {-b, b, a, a, -a, -a, b, -b};
+    ll y[8] = {a, a, b, -b, -b, b, -a, -a};
+    int i, j;
+    set< pair<ll, ll> > p1, p2;
+    for (i = 0; i < 8; i++) {
+        x_val = xk + x[i];
+        y_val = yk + y[i];
+        //cout<< x_val << "" "" << y_val << ""\n"";
+        p1.insert(make_pair(x_val, y_val));
+    }
+    //cout<< ""\n"";
+
+    int cnt = 0;
+    for (i = 0; i < 8; i++) {
+        x_val = xq + x[i];
+        y_val = yq + y[i];
+        //cout<< x_val << "" "" << y_val << ""\n"";
+        p2.insert(make_pair(x_val, y_val));
+//        for (j = 0; j < p1.size(); j++) {
+//            if (p1[j].first == x_val && p1[j].second == y_val) {
+//                cnt += 1;
+//                cout<<
+//            }
+//                // cnt += 1;
+//        }
+    }
+//    //cout<< cnt << ""\n"";
+//    cout<< ""\n\n"";
+//    cout<< ""---------- "" << p1.size() << "" "" << p2.size() << ""\n"";
+    set< pair<ll, ll> >::iterator it1, it2;
+    for (it1 = p1.begin(); it1 != p1.end(); it1++) {
+            //cout<< it1->first << "" "" << it1->second << ""\n"";
+
+//        for (j = 0; j < p2.size(); j++) {
+//            if (it->first == p2[first && p1[i].second == p2[j].second)
+//                cnt += 1;
+//        }
+        for (it2 = p2.begin(); it2 != p2.end(); it2++) {
+            if (it1->first == it2->first && it1->second == it2->second)
+                cnt += 1;
+        }
+    }
+    //cout<< ""------cnt "" << cnt << ""\n"";
+    cout<< cnt << ""\n"";
+}
+
+int main()
+{
+    int t = 1;
+    cin>> t;
+
+    while (t--)
+        solve();
+
+    return 0;
+}"
+7,c++,"#include<bits/stdc++.h>
+using namespace std;
+
+typedef long long ll;
+
+void solve()
+{
+    int n, i, j, val;
+    cin>> n;
+    vector<int> v;
+    int arr[n+1];
+    memset(arr, 0, sizeof(arr));
+    for (i = 1; i <= n; i++) {
+        cin>> val;
+        if (val <= n)
+            arr[val] += 1;
+    }
+    int hop[n+1], start, len;
+    memset(hop, 0, sizeof(hop));
+    for (i = 1; i <= n; i++) {
+        if (arr[i] > 0) {
+            for (j = i; j <= n; j += i)
+                hop[j] += arr[i];
+        }
+    }
+    int mx = -1;
+    for (i = 1; i <= n; i++)
+        mx = max(mx, hop[i]);
+    cout<< mx << ""\n"";
+}
+
+int main()
+{
+    ios_base::sync_with_stdio(0);
+    cin.tie(0);
+    int t = 1, i;
+    cin>> t;
+    while (t--)
+        solve();
+    return 0;
+}"
+8,c++,"#include<bits/stdc++.h>
+using namespace std;
+
+typedef long long ll;
+
+void solve(int t)
+{
+    int n, m, i, j, mx, nmx, low, high, cur;
+    string s, l, r;
+    char ch;
+    cin>> s >> m >> l >> r;
+
+    n = s.size();
+    mx = 0;
+    for (i = 0; i < m; i++)
+    {
+        low = l[i] - '0';
+        high = r[i] - '0';
+        nmx = mx;
+        for (j = low; j <= high; j++)
+        {
+            cur = mx;
+            while (cur < n && s[cur]-'0' != j)
+                cur += 1;
+
+            nmx = max(nmx, cur);
+        }
+        mx = nmx + 1;
+    }
+    if (mx > n)
+        printf(""YES\n"");
+    else
+        printf(""NO\n"");
+}
+
+int main()
+{
+    int test_case = 1, t;
+    cin>> test_case;
+
+    for (t = 1; t <= test_case; t++)
+        solve(t);
+
+    return 0;
+}
+ "
+9,c++,"// Bismillah
+#include<bits/stdc++.h>
+using namespace std;
+
+typedef long long ll;
+
+void solve()
+{
+    int i, j, n;
+    string s;
+    for (i = 0; i < 3; i++) {
+        cin>> s;
+        char ch = '?';
+        for (j = 0; j < 3; j++) {
+            if (s[j] == ch) {
+                bool founda = false;
+                if (s[0] == 'A' || s[1] == 'A' || s[2] == 'A')
+                    founda = true;
+                bool foundb = false;
+                if (s[0] == 'B' || s[1] == 'B' || s[2] == 'B')
+                    foundb = true;
+                bool foundc = false;
+                if (s[0] == 'C' || s[1] == 'C' || s[2] == 'C')
+                    foundc = true;
+
+                if (!founda)
+                    cout<< ""A"" << ""\n"";
+                else if (!foundb)
+                    cout<< ""B"" << ""\n"";
+                else
+                    cout<< ""C"" << ""\n"";
+            }
+        }
+    }
+}
+
+int main()
+{
+    int t = 1;
+    ios_base::sync_with_stdio(false);
+    cin.tie(0);
+    cin>> t;
+    while (t--)
+        solve();
+    return 0;
+}
+ "
+10,c++,"#include<bits/stdc++.h>
+using namespace std;
+
+typedef long long ll;
+
+void solve()
+{
+    int n, sum, arr[50000], num, total = 0, i, last, j, large = -1;
+    cin>> n >> sum;
+
+    memset(arr, 0, sizeof(arr));
+    for (i = 0; i < n; i++) {
+        cin>> num;
+        large = max(large, num);
+        arr[num] = 1;
+    }
+
+    for (i = large; i >= 1; i--) {
+        if (arr[i] == 0)
+            total += i;
+    }
+
+    if (total == sum)
+    {
+        cout<< ""YES"" << ""\n"";
+        return;
+    }
+
+    bool found = false;
+    for (i = large+1; i <= 10000; i++) {
+        total += i;
+        if (total < sum)
+            continue;
+
+        if (total == sum) {
+            found = true;
+        }
+        break;
+    }
+
+    if (found)
+        cout<< ""YES"" << ""\n"";
+    else
+        cout<< ""NO"" << ""\n"";
+}
+
+int main()
+{
+    // ios_base::sync_with_stdio(0);
+    // cin.tie(0);
+    int t = 1;
+    cin>> t;
+
+    while (t--)
+        solve();
+
+    return 0;
+}"
+11,java,"package com.reve.audio.libraries.dlls.codec.opus;
+
+import com.reve.util.LibraryLoader;
+
+public class OPUSEncoder {
+
+    static{
+            LibraryLoader.loadLibrary(""lib/audio/opus"");
+    }
+
+    private static int CommonClassID = 0;
+    private int classID;
+
+    private native void open(int classID);
+
+    private native int encode(int classID, short[] samples, int inOffset, int lenOfSamples, byte[] outputData, int outOffset);
+    private native int encodeWithBitRate(int classID, short[] samples, int inOffset, int lenOfSamples, byte[] outputData, int outOffset, int bitRate);
+
+    private native void reset(int classID);
+    private native void close(int classID);
+
+    private native void setBitRate(int bitrate);
+    private native void setSampleRate(int sampleRate);
+    private native void setFrameTime(int time);
+
+    private native void enableFEC(int classID, int packetDropPercentage);
+    private native int enableDRED(int classID, int complexity, int packetLossPercentage, int dredDuration);
+
+    public OPUSEncoder(){
+        classID = (CommonClassID++);
+        open(classID);
+    }
+    public OPUSEncoder(int sampleRate, int bitrate, int frameTime){
+        setBitRate(bitrate);
+        setSampleRate(sampleRate);
+        setFrameTime(frameTime);
+        classID = (CommonClassID++);
+        open(classID);
+    }
+
+    public int encode(short[] samples, int inOffset, int lenOfSamples, byte[] outputData, int outOffset) {
+        int len = encode(classID, samples, inOffset, lenOfSamples, outputData, outOffset);
+        return len;
+    }
+
+    public int encodeWithBitRate(short[] samples, int inOffset, int lenOfSamples, byte[] outputData, int outOffset, int bitRate) {
+        int len = encodeWithBitRate(classID, samples, inOffset, lenOfSamples, outputData, outOffset, bitRate);
+        return len;
+    }
+
+    public void enableFEC(int packetDropPercentage){
+        enableFEC(classID, packetDropPercentage);
+    }
+
+    public int enableDRED(int complexity, int packetLossPercentage, int dredDuration) {
+        return enableDRED(classID, complexity, packetLossPercentage, dredDuration);
+    }
+
+    public void reset(){
+        reset(classID);
+    }
+
+    public void close(){
+        close(classID);
+    }
+}"
+12,java,"package com.reve.conferenceClient;
+
+import java.io.IOException;
+import java.net.DatagramPacket;
+import java.net.DatagramSocket;
+import java.net.InetAddress;
+
+public class ClientRTCPSender extends Thread {
+    private DatagramSocket socket;
+    private boolean running;
+    private InetAddress destAddress;
+    private int destPort;
+
+//    private ServerRTCP serverRTCP;
+
+    public ClientRTCPSender(String destAddress, int destPort) {
+        running = false;
+        try {
+            socket = new DatagramSocket();
+            this.destAddress = InetAddress.getByName(destAddress);
+            this.destPort = destPort;
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+//        serverRTCP = new ServerRTCP();
+    }
+
+    @Override
+    public void run() {
+        running = true;
+        DatagramPacket packet = new DatagramPacket(new byte[100], 100);
+        packet.setAddress(destAddress);
+        packet.setPort(destPort);
+//        serverRTCP.start();
+
+//        try {
+//            Thread.sleep(50);
+//        } catch (InterruptedException e) {
+//            throw new RuntimeException(e);
+//        }
+
+        while (running) {
+            //for (int i = 1; i <= Configuration.CLIENT_RTCP_SENDING_RATE; i++) {
+                try {
+                    Thread.sleep((int) (1000.0 / Configuration.CLIENT_RTCP_SENDING_RATE));
+                    RTCPPacket rtcpPacket = new RTCPPacket();
+                    byte[] data = rtcpPacket.getRTCPPacketData();
+                    packet.setData(data, 0, data.length);
+                    socket.send(packet);
+//                    this.serverRTCP.socket.send(packet);
+                    Thread.sleep((int) (1000.0 / Configuration.CLIENT_RTCP_SENDING_RATE));
+                } catch (IOException | InterruptedException e) {
+                    e.printStackTrace();
+                }
+            //}
+        }
+    }
+
+    public void shutDown() {
+        running = false;
+        try {
+            socket.close();
+        } catch (Exception ignored) {}
+        this.interrupt();
+    }
+}"
+13,java,"package org.example;
+
+import java.io.IOException;
+import java.net.*;
+
+/**
+ * Sends RTCP packets to the Server
+ */
+public class ClientRTCPSender extends Thread {
+    private boolean running;
+    private InetAddress destAddress; // Server's address
+    private int destPort; // Server's RTCP port
+    private ClientRTCPReceiver clientRTCPReceiver;
+
+    public ClientRTCPSender(String destAddress, int destPort) {
+        running = false;
+        try {
+            this.destAddress = InetAddress.getByName(destAddress);
+            this.destPort = destPort;
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+        clientRTCPReceiver = new ClientRTCPReceiver();
+    }
+
+    @Override
+    public void run() {
+        running = true;
+        DatagramPacket packet = new DatagramPacket(new byte[100], 100);
+        packet.setAddress(destAddress);
+        packet.setPort(destPort);
+        // Staring Client's RTCP receiver thread
+        clientRTCPReceiver.start();
+
+        while (running) {
+            try {
+                Thread.sleep((int) (1000.0 / Configuration.CLIENT_RTCP_SENDING_RATE));
+                // Creating RTCP packet
+                RTCPPacket rtcpPacket = new RTCPPacket();
+                byte[] data = rtcpPacket.getRTCPPacketData();
+                packet.setData(data, 0, data.length);
+                // Sending RTCP packet to the server
+                this.clientRTCPReceiver.socket.send(packet);
+            } catch (IOException | InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+    public void shutDown() {
+        running = false;
+        try {
+            this.clientRTCPReceiver.socket.close();
+        } catch (Exception ignored) {}
+        this.interrupt();
+    }
+}"
+14,java,"package com.reve.audio.libraries.dlls.audio_filters.webrtc;
+
+public class WebrtcAPM {
+
+    static {
+        System.loadLibrary(""webrtc_apm"");
+        System.loadLibrary(""webrtc_updated_agc_aec"");
+    }
+
+    private static int ID = 0;
+    private int classID;
+
+    private native int createWebrtcAPM(int classID, int sampleRate, int channel);
+    private native int setParameterWebrtcAPM(int classID, int type, float value);
+    private native int  initiateWebrtcAPM(int classID);
+    private native int processStreamWebrtcAPM(int classID, short [] inputData, int offset, int inputLength);
+    private native int feedPlayedDataWebrtcAPM(int classID, short [] inputData, int offset, int inputLength);
+    private native int destroyWebrtcAPM(int classID);
+
+    public WebrtcAPM(int sampleRate, int channel){
+        classID = getNewID();
+        createWebrtcAPM(classID, sampleRate, channel);
+    }
+
+    public void setParameter(int type, float value) {
+        this.setParameterWebrtcAPM(classID, type, value);
+    }
+
+    public void setParameter(WebrtcApmConfig config) {
+        // Configure AGC2
+        setParameter(WebrtcApmConfig.PARAM_GAIN_CONTROLLER2_ENABLED, config.getGainController2Enabled());
+        setParameter(WebrtcApmConfig.PARAM_GAIN_CONTROLLER2_ADAPTIVE_DIGITAL_ENABLED, config.getGainController2AdaptiveDigitalEnabled());
+
+        setParameter(WebrtcApmConfig.PARAM_VAD_PROBABILITY_ATTACK, config.getVadProbabilityAttack());
+        setParameter(WebrtcApmConfig.PARAM_LEVEL_ESTIMATOR_ADJACENT_SPEECH_FRAMES_THRESHOLD, config.getLevelEstimatorAdjacentSpeechFramesThreshold());
+        setParameter(WebrtcApmConfig.PARAM_EXTRA_SATURATION_MARGIN_DB, config.getExtraSaturationMarginDb());
+        setParameter(WebrtcApmConfig.PARAM_GAIN_APPLIER_ADJACENT_SPEECH_FRAMES_THRESHOLD, config.getGainApplierAdjacentSpeechFrameThreshold());
+        setParameter(WebrtcApmConfig.PARAM_MAX_GAIN_CHANGE_DB_PER_SECOND, config.getMaxGainChangeDbPerSecond());
+        setParameter(WebrtcApmConfig.PARAM_MAX_OUTPUT_NOISE_LEVEL_DBFS, config.getMaximumOutputNoiseLevelDbfs());
+
+        // Configure NS
+        setParameter(WebrtcApmConfig.PARAM_NOISE_SUPPRESSION_ENABLED, config.getNoiseSuppressionEnabled());
+        setParameter(WebrtcApmConfig.PARAM_NOISE_SUPPRESSION_LEVEL_K_HIGH, config.getNoiseSuppressionLevelKHigh());
+
+        // Configure AEC3
+        setParameter(WebrtcApmConfig.PARAM_ECHO_CANCELLER_ENABLED, config.getEchoCancellerEnabled());
+    }
+
+    public int initiate() {
+        return this.initiateWebrtcAPM(classID);
+    }
+
+    public int processStream(short [] inputData, int offset, int inputLength){
+        return processStreamWebrtcAPM(classID, inputData, offset, inputLength);
+    }
+
+    public int feedPlayedData(short [] inputData, int offset, int inputLength){
+        return feedPlayedDataWebrtcAPM(classID, inputData, offset, inputLength);
+    }
+
+    public int destroy(){
+        return destroyWebrtcAPM(classID);
+    }
+
+    private static synchronized int getNewID(){
+        return ID++;
+    }
+}"
+15,java,"import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.net.Socket;
+
+public class Client {
+    public static void main(String[] args) throws IOException {
+        Socket clientSocket = new Socket(""127.0.0.1"", 22222);
+        System.out.println(""Client connected..."");
+
+        ObjectOutputStream oos = new ObjectOutputStream(clientSocket.getOutputStream());
+        ObjectInputStream ois = new ObjectInputStream(clientSocket.getInputStream());
+
+        new WriterThread(oos, clientSocket);
+        new ReaderThread(ois);
+    }
+}"
+16,java,"package com.reve.hilbertTransform;
+
+import hageldave.ezfftw.dp.FFT;
+import org.apache.commons.math3.complex.Complex;
+
+public class HilbertTransformer {
+
+    /***
+     * Applies Hilbert transformation using FFT, based on SciPy's Marple implementation
+     * @param waveform Signal in time domain
+     * @return Analytical signal, real values are original signal and imaginary values are hilbert transformed signal
+     */
+    public static Complex[] transform(double[] waveform) {
+        double[] real = new double[waveform.length];
+        double[] imaginary = new double[waveform.length];
+
+        FFT.fft(waveform, real, imaginary, waveform.length);
+        double[] conv = new double[waveform.length];
+
+        if (waveform.length % 2 == 0) {
+            conv[0] = 1;
+            for (int i = 1; i < waveform.length / 2; i++) {
+                conv[i] = 2;
+            }
+            conv[waveform.length / 2] = 1;
+        } else {
+            conv[0] = 1;
+            for (int i = 1; i < (waveform.length + 1) / 2; i++) {
+                conv[i] = 2;
+            }
+        }
+
+        double[] hilbertReal = new double[waveform.length];
+        double[] hilbertImaginary = new double[waveform.length];
+
+        for (int i = 0; i < waveform.length; i++) {
+            hilbertReal[i] = real[i] * conv[i];
+            hilbertImaginary[i] = imaginary[i] * conv[i];
+        }
+
+        double[] outputReal = new double[waveform.length];
+        double[] outputImaginary = new double[waveform.length];
+
+        FFT.ifft(hilbertReal, hilbertImaginary, outputReal, outputImaginary, waveform.length);
+
+        Complex[] result = new Complex[waveform.length];
+        for (int i = 0; i < waveform.length; i++) {
+            result[i] = new Complex(outputReal[i]/ waveform.length, outputImaginary[i]/ waveform.length) ;
+        }
+
+        return result;
+    }
+
+}"
+17,java,"package com.reve.audio.libraries.dlls.audio_filters.webrtc;
+
+public class WebrtcAgc2Config {
+
+    public static final int PARAM_VAD_PROBABILITY_ATTACK                             =   1;
+    public static final int PARAM_LEVEL_ESTIMATOR_ADJACENT_SPEECH_FRAMES_THRESHOLD   =   2;
+    public static final int PARAM_EXTRA_SATURATION_MARGIN_DB                         =   3;
+    public static final int PARAM_GAIN_APPLIER_ADJACENT_SPEECH_FRAMES_THRESHOLD      =   4;
+    public static final int PARAM_MAX_GAIN_CHANGE_DB_PER_SECOND                      =   5;
+    public static final int PARAM_MAX_OUTPUT_NOISE_LEVEL_DBFS                        =   6;
+
+    private float vadProbabilityAttack;
+    private int levelEstimatorAdjacentSpeechFramesThreshold;
+    private float extraSaturationMarginDb;
+    private int gainApplierAdjacentSpeechFrameThreshold;
+    private float maxGainChangeDbPerSecond;
+    private float maximumOutputNoiseLevelDbfs;
+
+    public WebrtcAgc2Config() {
+        this.vadProbabilityAttack = 0.6F;
+        this.levelEstimatorAdjacentSpeechFramesThreshold = 3;
+        this.extraSaturationMarginDb = 5;
+        this.gainApplierAdjacentSpeechFrameThreshold = 1;
+        this.maxGainChangeDbPerSecond = 2;
+        this.maximumOutputNoiseLevelDbfs = -75;
+    }
+
+    public float getVadProbabilityAttack() {
+        return vadProbabilityAttack;
+    }
+
+    public void setVadProbabilityAttack(float vadProbabilityAttack) {
+        this.vadProbabilityAttack = vadProbabilityAttack;
+    }
+
+    public int getLevelEstimatorAdjacentSpeechFramesThreshold() {
+        return levelEstimatorAdjacentSpeechFramesThreshold;
+    }
+
+    public void setLevelEstimatorAdjacentSpeechFramesThreshold(int levelEstimatorAdjacentSpeechFramesThreshold) {
+        this.levelEstimatorAdjacentSpeechFramesThreshold = levelEstimatorAdjacentSpeechFramesThreshold;
+    }
+
+    public float getExtraSaturationMarginDb() {
+        return extraSaturationMarginDb;
+    }
+
+    public void setExtraSaturationMarginDb(float extraSaturationMarginDb) {
+        this.extraSaturationMarginDb = extraSaturationMarginDb;
+    }
+
+    public int getGainApplierAdjacentSpeechFrameThreshold() {
+        return gainApplierAdjacentSpeechFrameThreshold;
+    }
+
+    public void setGainApplierAdjacentSpeechFrameThreshold(int gainApplierAdjacentSpeechFrameThreshold) {
+        this.gainApplierAdjacentSpeechFrameThreshold = gainApplierAdjacentSpeechFrameThreshold;
+    }
+
+    public float getMaxGainChangeDbPerSecond() {
+        return maxGainChangeDbPerSecond;
+    }
+
+    public void setMaxGainChangeDbPerSecond(float maxGainChangeDbPerSecond) {
+        this.maxGainChangeDbPerSecond = maxGainChangeDbPerSecond;
+    }
+
+    public float getMaximumOutputNoiseLevelDbfs() {
+        return maximumOutputNoiseLevelDbfs;
+    }
+
+    public void setMaximumOutputNoiseLevelDbfs(float maximumOutputNoiseLevelDbfs) {
+        this.maximumOutputNoiseLevelDbfs = maximumOutputNoiseLevelDbfs;
+    }
+}"
+18,java,"package com.reve.mixing;
+
+import com.reve.util.AudioFrameShort;
+
+import java.util.ArrayList;
+
+public class AlignToRMSServer {
+
+    private int shortFrameLen;
+    private long inputRMS;
+    private long mixedRMS;
+    private double lambda;
+    private long[] trueMixer;
+//    private long[] sumOfSquaredAmplitudeParticipantList;
+    private final int MAX_PARTICIPANT_IN_MIXING = 10;
+
+    public AlignToRMSServer(int shortFrameLen) {
+        this.shortFrameLen = shortFrameLen;
+        this.trueMixer = new long[shortFrameLen];
+//        this.sumOfSquaredAmplitudeParticipantList = new long[MAX_PARTICIPANT_IN_MIXING];
+    }
+
+    public int applyAlignToRMSServer(ArrayList<AudioFrameShort> shortFrameList, int topN_participants, ArrayList<short[]> outputList, int outOffset, boolean isTotalMixedStreamNeeded) {
+
+        long t1 = System.nanoTime();
+        if (shortFrameList.isEmpty() || outputList.size() <= topN_participants)
+            return 0;
+        else if (shortFrameList.size() == 1) {
+            System.arraycopy(shortFrameList.get(0).data, 0, outputList.get(0), outOffset, shortFrameList.get(0).len);
+            return shortFrameList.get(0).len;
+        }
+
+        // Calculate True Mixer Output
+        for (int i = 0; i < shortFrameLen; i++) {
+            trueMixer[i] = 0;
+            for (int j = 0; j < topN_participants; j++) {
+                trueMixer[i] += shortFrameList.get(j).data[i];;
+            }
+        }
+
+//        // Calculate sum of squared amplitude for each participants
+//        for (int i = 0; i < topN_participants; i++) {
+//            sumOfSquaredAmplitudeParticipantList[i] = 0;
+//            for (int j = 0; j < shortFrameLen; j++) {
+//                sumOfSquaredAmplitudeParticipantList[i] += (shortFrameList.get(i).data[j] * shortFrameList.get(i).data[j]);
+//            }
+//        }
+
+        // For every PSTN participant calculate the mixed stream without considering that participant
+        for (int i = 0; i < topN_participants; i++) {
+            if (!shortFrameList.get(i).isPstnClient) continue;
+            AudioFrameShort frame = shortFrameList.get(i);
+
+            inputRMS = 0;
+            for (int j = 0; j < topN_participants; j++) {
+                if (i == j) continue;
+//                inputRMS += sumOfSquaredAmplitudeParticipantList[j];
+                inputRMS += (shortFrameLen * frame.rmsEnergy * frame.rmsEnergy);
+
+            }
+
+            mixedRMS = 0;
+            for (int j = 0; j < shortFrameList.get(i).len; j++) {
+                mixedRMS += (long) Math.pow((trueMixer[j] - shortFrameList.get(i).data[j]), 2);
+            }
+
+            lambda = Math.sqrt(inputRMS / (mixedRMS * 1.0 * (topN_participants - 1)));
+
+            if ((mixedRMS * (topN_participants - 1) == 0)) return shortFrameLen;
+
+            // Placing mixed stream in the output array
+            for (int j = 0; j < shortFrameLen; j++) {
+                if (outOffset + j >= outputList.get(i).length) {
+                    break;
+                }
+                outputList.get(i)[outOffset + j] = (short) ((trueMixer[j] - shortFrameList.get(i).data[j]) * lambda);
+            }
+        }
+
+        // Calculating total mixed audio stream
+        if (isTotalMixedStreamNeeded) {
+            inputRMS = 0;
+            for (int i = 0; i < topN_participants; i++) {
+                AudioFrameShort frame = shortFrameList.get(i);
+                inputRMS += (shortFrameLen * frame.rmsEnergy * frame.rmsEnergy);
+            }
+
+            mixedRMS = 0;
+            for (int i = 0; i < shortFrameLen; i++) {
+                mixedRMS += (trueMixer[i] * trueMixer[i]);
+            }
+
+            lambda = Math.sqrt(inputRMS / (topN_participants * mixedRMS * 1.0));
+
+            // Placing mixed stream in the output array
+            for (int i = 0; i < shortFrameLen; i++) {
+                if (outOffset + i >= outputList.get(topN_participants).length) {
+                    break;
+                }
+                outputList.get(topN_participants)[outOffset + i] = (short) (trueMixer[i] * lambda);
+            }
+        }
+        long t2 = System.nanoTime();
+        System.out.println(""time taken : ""+(t2-t1)+"" nano seconds"");
+        return shortFrameLen;
+    }
+}"
+19,java,"package com.reve.cng;
+
+import java.util.Random;
+
+public class ComfortNoiseGeneration {
+    private double noiseLevelLinear;
+    private double noise;
+    private int noisySample;
+    Random random;
+
+    public ComfortNoiseGeneration(double noiseLevelDb) {
+        this.noiseLevelLinear = dBToAmplitude(noiseLevelDb);
+        this.random = new Random();
+    }
+
+    public void applyComfortNoiseGeneration(short[] encodeShortBuffer, int inputOffset, int inputLength) {
+        for (int i = 0; i < inputLength; i++) {
+            noise = random.nextGaussian() * Short.MAX_VALUE * noiseLevelLinear;
+            noisySample = encodeShortBuffer[i + inputOffset] + (int) noise;
+            encodeShortBuffer[i + inputOffset] = (short) Math.max(Short.MIN_VALUE, Math.min(Short.MAX_VALUE, noisySample));
+        }
+    }
+
+    private static double dBToAmplitude(double db) {
+        return Math.pow(10, (db / 20));
+    }
+}"
+20,java,"import java.io.IOException;
+import java.io.ObjectInputStream;
+
+public class ReaderThread implements Runnable {
+    ObjectInputStream ois;
+    Thread t;
+
+    ReaderThread(ObjectInputStream ois) {
+        this.ois = ois;
+        t = new Thread(this);
+        t.start();
+    }
+
+    @Override
+    public void run() {
+        while (true) {
+            try {
+                Object sMsg = ois.readObject();
+                System.out.println(""CLIENT received: "" + (String) sMsg);
+            } catch (ClassNotFoundException | IOException e) {
+                throw new RuntimeException(e);
+            }
+        }
+    }
+}"
+21,python,"n = int(input())
+G = [[] for _ in range(n)]
+for _ in range(n-1):
+    a, b = tuple(map(lambda x: int(x)-1, input().split()))
+    G[a].append(b)
+    G[b].append(a)
+
+color = [0] * n
+color[0] = 1
+color[n-1] = -1
+from collections import deque
+q = deque([])
+q.append(0)
+q.append(n-1)
+while q:
+    node = q.popleft()
+    c = color[node]
+    for to in G[node]:
+        if color[to] == 0:
+            color[to] = c
+            q.append(to)
+
+cb = color.count(1)
+cw = color.count(-1)
+
+if cb > cw:
+    print('Fennec')
+else:
+    print('Snuke')
+"
+22,python,"N, K = map(int, input().split())
+if K > (N - 1) * (N - 2) // 2:
+    print(-1)
+else:
+    c = 0
+    lst = []
+    for i in range(2, N+1):
+        c+=1
+        lst.append([1, i])
+    cnt = 0
+    f = 0
+    for i in range(2, N+1):
+        for j in range(i+1, N+1):
+            if cnt == (N-1)*(N-2)//2-K:
+                f=1
+                break
+            c+=1
+            cnt+=1
+            lst.append([i, j])
+        if f:
+            break
+    print(c)
+    for l in lst:
+        print(*l)"
+23,python,"n,m = map(int,input().split())
+mod = 10**9 + 7
+l = n+1000
+fac = [1]*l
+facr = [1]*l
+
+for i in range(l-1):
+    fac[i+1] = fac[i]*(i+1)%mod
+facr[l-1] = pow(fac[l-1],mod - 2,mod)
+for i in range(1,l)[::-1]:
+    facr[i-1] = facr[i]*i%mod
+
+def combi(N,K):
+    return fac[N]*facr[N-K]%mod*facr[K]%mod
+
+prime = {}
+i = 2
+x = m
+while i*i <= m:
+    if x%i == 0:
+        prime[i] = 0
+        while x%i == 0:
+            x = x//i
+            prime[i] += 1
+    i += 1
+if x > 1:
+    prime[x] = 1
+ans = 1
+for q in prime.values():
+    ans *= combi(q+n-1,n-1)
+    ans %= mod
+print(ans)
+"
+24,python,"import math
+import itertools
+row_length = int(input())
+point = {}
+for i in range(row_length):
+    point[i] = list(map(int, input().split()))
+point_list = [point[x] for x in range(len(point))]
+pattern_list = list(itertools.permutations(point_list))
+
+
+
+def calc_dist(pat_list): #旅程リストを入れた時に、その距離を計算する
+    dist = 0
+    for i in range(len(pat_list)-1):
+        dist += math.sqrt(pow(pat_list[i][0] - pat_list[i+1][0], 2) + pow(pat_list[i][1] - pat_list[i+1][1], 2))
+    return dist
+
+ans_dist = 0
+for j_list in pattern_list:
+    ans_dist += calc_dist(j_list)
+
+print(ans_dist/len(pattern_list))"
+25,python,"""""""
+https://atcoder.jp/contests/tokiomarine2020/submissions/14229099
+""""""
+N,K = map(int,input().split())
+A = list(map(int,input().split()))
+
+def update(A):
+    b = [0]*N
+
+    for i,a in enumerate(A):
+        l = max(0,i-a)
+        r = min(N-1,i+a)
+
+        b[l] += 1
+        if r+1 < N:
+            b[r+1] -= 1
+    
+    res = []
+    s = 0
+    for i in b:
+        s += i
+        res.append(s)
+    return res
+
+for _ in range(min(K,75)):
+    A = update(A)
+
+print(*A)"
+26,python,"# 色の塗り方は全部で何通りか。O(C^3)で、C^3 = 27000通り。
+# 各塗り方に対していちいち計算していると最大25000マスで、これだと間に合わない。
+# 3つに別れた各部分を各色に変えるコスト合計を前計算しておけば良い。O(C^3 + N^2 C)。
+# 一ひねりした全探索。
+
+n, c = list(map(int, input().split()))
+change_cost = [list(map(int, input().split())) for _ in range(c)]
+init_color = [list(map(int, input().split())) for _ in range(n)]
+
+cost = [[0 for _ in range(c)] for _ in range(3)]
+
+for row in range(n):
+    for col in range(n):
+        before = init_color[row][col] - 1
+        for after in range(c):
+            idx = (row + col) % 3
+            cost[idx][after] += change_cost[before][after]
+
+ans = 1000 * 500 * 500 * 10
+for ci in range(c):
+    for cj in range(c):
+        for ck in range(c):
+            if (ci != cj != ck != ci):
+                ans = min(ans, cost[0][ci] + cost[1][cj] + cost[2][ck])
+
+print(ans)
+"
+27,python,"n = int(input())
+*A, = map(int, input().split())
+
+from itertools import product
+
+ans = 0
+for P in product(range(3), repeat=n):
+    even = 0
+    for i in range(n):
+        b = A[i] + P[i] - 1
+        even |= (b % 2) == 0
+    if even:
+        ans += 1
+print(ans)"
+28,python,"a,b,c=map(int,input().split())
+if ((b-a)==(c-b)):
+    print (""YES"")
+else:
+    print(""NO"")"
+29,python,"n,u,v=map(int,input().split())
+anss=0
+u-=1
+v-=1
+d=[[]for _ in range(n)]
+inf=float('inf')
+aoki=[inf]*n
+for i in range(n-1):
+  a,b=map(int,input().split())
+  a-=1
+  b-=1
+  d[a].append(b)
+  d[b].append(a)
+Q=d[v]
+aoki[v]=0
+dis=1
+visited={v}
+while Q:
+  P=[]
+  for i in Q:
+    visited.add(i)
+    for j in d[i]:
+      if j not in visited:P.append(j)
+    aoki[i]=dis
+  dis+=1
+  Q=P
+Q=d[u]
+chokudai=[-1]*n
+chokudai[u]=0
+dis=1
+visited={u}
+point=-1
+while Q:
+  P=[]
+  for i in Q:
+    visited.add(i)
+    for j in d[i]:
+      if aoki[j]<=dis+1:
+        if aoki[j]==dis+1:anss=1
+        if point<0:point=i
+        continue
+      if j not in visited:P.append(j)
+    chokudai[i]=dis
+  dis+=1
+  Q=P
+Q=d[point]
+dis=chokudai[point]+1
+visited={point}
+while Q:
+  P=[]
+  for i in Q:
+    visited.add(i)
+    if chokudai[i]==-1:continue
+    chokudai[i]=max(dis,chokudai[i])
+    for j in d[i]:
+      if j not in visited:P.append(j)
+  dis+=1
+  Q=P
+ans=0
+for i in range(n):
+  if aoki[i]>chokudai[i]:ans=max(ans,chokudai[i])
+print(ans+anss)
+#print(aoki)
+#print(chokudai)"
+30,python,"x = int(input())
+if x == 7 or x == 5 or x == 3:
+    print('YES')
+else:
+    print('NO')"
