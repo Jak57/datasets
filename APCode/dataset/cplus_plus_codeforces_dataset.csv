@@ -1,0 +1,4452 @@
+link,rating,solution
+https://codeforces.com/contest/1915/problem/D,900,"// Bismillah
+#include<bits/stdc++.h>
+using namespace std;
+
+typedef long long ll;
+
+bool vowel(char ch) {
+    return (ch == 'a' || ch == 'e');
+}
+
+bool consonant(char ch) {
+    return (ch == 'b' || ch == 'c' || ch == 'd');
+}
+
+void solve()
+{
+    int n, i, j;
+    string s;
+    cin>> n >> s;
+    vector<int> ans;
+
+    for (i = 0; i < n-1; i++) {
+        if (consonant(s[i]) && vowel(s[i+1]))
+            ans.push_back(i);
+    }
+    //cout<< ans.size() << ""\n"";
+    int m = ans.size();
+//    if (m == 1)
+//        cout<< s << ""\n"";
+
+    vector<string> split;
+    for (i = 0; i < m-1; i++)
+    {
+        int idx = ans[i];
+        if (ans[i+1]-ans[i] == 3) {
+            split.push_back(s.substr(idx, 3));
+            //cout<< ""hi"" << ""\n"";
+            //cout<< idx << "" "" << s.substr(idx, 3) << ""\n"";
+        } else if (ans[i+1]-ans[i] == 2) {
+            //cout<< idx << "" "" << ""bye"" << ""\n"";
+            split.push_back(s.substr(idx, 2));
+            //cout<< s.substr(idx, 2) << ""\n"";
+        }
+    }
+    if (ans[m-1]+3 == n)
+        split.push_back(s.substr(ans[m-1], 3));
+    else
+        split.push_back(s.substr(ans[m-1], 2));
+
+    //cout<< split.size() << ""\n"";
+    for (i = 0; i < m; i++) {
+        cout<< split[i];
+        if (i == m-1)
+            cout<< ""\n"";
+        else
+            cout<< ""."";
+    }
+}
+
+int main()
+{
+    int t = 1;
+    ios_base::sync_with_stdio(false);
+    cin.tie(0);
+    cin>> t;
+    while (t--)
+        solve();
+    return 0;
+}
+ "
+https://codeforces.com/contest/1915/problem/C,800,"// Bismillah
+#include<bits/stdc++.h>
+using namespace std;
+
+typedef long long ll;
+
+void solve()
+{
+    int n, i, j;
+    ll sum = 0, num;
+    cin>> n;
+    for (i = 0; i < n; i++) {
+        cin>> num;
+        sum += num;
+    }
+    //cout<< sum << ""\n"";
+    ll sq = ll(sqrt(sum*1.0));
+    if (sq*sq == sum)
+        cout<< ""YES"" << ""\n"";
+    else
+        cout<< ""NO"" << ""\n"";
+}
+
+int main()
+{
+    int t = 1;
+    ios_base::sync_with_stdio(false);
+    cin.tie(0);
+    cin>> t;
+    while (t--)
+        solve();
+    return 0;
+}
+ "
+https://codeforces.com/contest/1915/problem/B,800,"// Bismillah
+#include<bits/stdc++.h>
+using namespace std;
+
+typedef long long ll;
+
+void solve()
+{
+    int i, j, n;
+    string s;
+    for (i = 0; i < 3; i++) {
+        cin>> s;
+        char ch = '?';
+        for (j = 0; j < 3; j++) {
+            if (s[j] == ch) {
+                bool founda = false;
+                if (s[0] == 'A' || s[1] == 'A' || s[2] == 'A')
+                    founda = true;
+                bool foundb = false;
+                if (s[0] == 'B' || s[1] == 'B' || s[2] == 'B')
+                    foundb = true;
+                bool foundc = false;
+                if (s[0] == 'C' || s[1] == 'C' || s[2] == 'C')
+                    foundc = true;
+
+                if (!founda)
+                    cout<< ""A"" << ""\n"";
+                else if (!foundb)
+                    cout<< ""B"" << ""\n"";
+                else
+                    cout<< ""C"" << ""\n"";
+            }
+        }
+    }
+}
+
+int main()
+{
+    int t = 1;
+    ios_base::sync_with_stdio(false);
+    cin.tie(0);
+    cin>> t;
+    while (t--)
+        solve();
+    return 0;
+}
+ "
+https://codeforces.com/contest/1915/problem/A,800,"// Bismillah
+#include<bits/stdc++.h>
+using namespace std;
+
+typedef long long ll;
+
+void solve()
+{
+    int a, b, c;
+    cin>> a >> b >> c;
+    if (a == b)
+        cout<< c << ""\n"";
+    else if (b == c)
+        cout<< a << ""\n"";
+    else
+        cout<< b << ""\n"";
+}
+
+int main()
+{
+    int t = 1;
+    //ios_base::sync_with_stdio(false);
+    //cin.tie(0);
+    cin>> t;
+    while (t--)
+        solve();
+    return 0;
+}
+ "
+https://codeforces.com/contest/1917/problem/B,1100,"// Bismillah
+#include<bits/stdc++.h>
+using namespace std;
+
+typedef long long ll;
+int arr[27];
+
+void solve()
+{
+    int n, i, j, m, sz;
+    string str;
+    set<char> s;
+    cin>> n >> str;
+
+    int ans = 0;
+    for (i = 0; i < n; i++) {
+        char ch = str[i];
+        if (s.find(ch) == s.end()) {
+            s.insert(ch);
+        }
+        sz = s.size();
+        ans += sz;
+    }
+    cout<< ans << ""\n"";
+    //return ans;
+}
+
+int main()
+{
+    int t = 1, i, j;
+    arr[0] = 0;
+    for (i = 1; i <= 26; i++) {
+        arr[i] = arr[i-1] + i;
+    }
+    arr[2] = 2;
+//    for (i = 1; i <= 26; i++)
+//        cout<< i << "" "" << arr[i] << ""\n"";
+    cin>> t;
+    while (t--)
+        solve();
+    return 0;
+}"
+https://codeforces.com/contest/1917/problem/A,800,"#include<bits/stdc++.h>
+using namespace std;
+
+typedef long long ll;
+
+void solve()
+{
+    int n, i, j, num;
+    int arr[200];
+    cin>> n;
+
+    for (i = 0; i < n; i++) {
+        cin>> num;
+        if (num == 0)
+            arr[i] = 0;
+        else if (num < 0)
+            arr[i] = -1;
+        else
+            arr[i] = 1;
+    }
+    int prod = 1;
+
+    for (i = 0; i < n; i++)
+        prod *= arr[i];
+
+    if (prod <= 0)
+        cout<< 0 << ""\n"";
+    else {
+        cout<< 1 << ""\n"";
+        cout<< ""1 0"" << ""\n"";
+    }
+}
+
+int main()
+{
+    int t = 1;
+    cin>> t;
+    while (t--)
+        solve();
+    return 0;
+}"
+https://codeforces.com/contest/1905/problem/B,1100,"#include<bits/stdc++.h>
+using namespace std;
+
+typedef long long ll;
+
+void solve()
+{
+    int deg[100005], i, j, u, v, n;
+    memset(deg, 0, sizeof(deg));
+    cin>> n;
+    for (i = 0; i < n-1; i++) {
+        cin>> u >> v;
+        deg[u] += 1;
+        deg[v] += 1;
+    }
+    int cnt = 0;
+    for (i = 1; i <= n; i++) {
+       // cout<< deg[i] << "" "";
+        if (deg[i] == 1)
+            cnt++;
+    }
+    //cout<< ""\n"";
+    cout<< int(ceil(cnt/2.0)) << ""\n"";
+}
+
+int main()
+{
+    int t = 1;
+    cin>> t;
+    while (t--)
+        solve();
+    return 0;
+}"
+https://codeforces.com/contest/1905/problem/A,800,"#include<bits/stdc++.h>
+using namespace std;
+
+typedef long long ll;
+
+void solve()
+{
+    int r, c;
+    cin>> r >> c;
+    cout<< max(r, c) << ""\n"";
+}
+
+int main()
+{
+    int t = 1;
+    cin>> t;
+    while (t--)
+        solve();
+    return 0;
+}"
+https://codeforces.com/contest/1904/problem/A,900,"#include<bits/stdc++.h>
+using namespace std;
+
+typedef long long ll;
+
+void solve()
+{
+    ll xk, yk, xq, yq, a, b, x_val, y_val;
+    cin>> a >> b >> xk >> yk >> xq >> yq;
+
+    ll x[8] = {-b, b, a, a, -a, -a, b, -b};
+    ll y[8] = {a, a, b, -b, -b, b, -a, -a};
+    int i, j;
+    set< pair<ll, ll> > p1, p2;
+    for (i = 0; i < 8; i++) {
+        x_val = xk + x[i];
+        y_val = yk + y[i];
+        //cout<< x_val << "" "" << y_val << ""\n"";
+        p1.insert(make_pair(x_val, y_val));
+    }
+    //cout<< ""\n"";
+
+    int cnt = 0;
+    for (i = 0; i < 8; i++) {
+        x_val = xq + x[i];
+        y_val = yq + y[i];
+        //cout<< x_val << "" "" << y_val << ""\n"";
+        p2.insert(make_pair(x_val, y_val));
+//        for (j = 0; j < p1.size(); j++) {
+//            if (p1[j].first == x_val && p1[j].second == y_val) {
+//                cnt += 1;
+//                cout<<
+//            }
+//                // cnt += 1;
+//        }
+    }
+//    //cout<< cnt << ""\n"";
+//    cout<< ""\n\n"";
+//    cout<< ""---------- "" << p1.size() << "" "" << p2.size() << ""\n"";
+    set< pair<ll, ll> >::iterator it1, it2;
+    for (it1 = p1.begin(); it1 != p1.end(); it1++) {
+            //cout<< it1->first << "" "" << it1->second << ""\n"";
+
+//        for (j = 0; j < p2.size(); j++) {
+//            if (it->first == p2[first && p1[i].second == p2[j].second)
+//                cnt += 1;
+//        }
+        for (it2 = p2.begin(); it2 != p2.end(); it2++) {
+            if (it1->first == it2->first && it1->second == it2->second)
+                cnt += 1;
+        }
+    }
+    //cout<< ""------cnt "" << cnt << ""\n"";
+    cout<< cnt << ""\n"";
+}
+
+int main()
+{
+    int t = 1;
+    cin>> t;
+
+    while (t--)
+        solve();
+
+    return 0;
+}"
+https://codeforces.com/contest/1878/problem/C,900,"#include<bits/stdc++.h>
+using namespace std;
+
+typedef long long ll;
+
+ll arr[200005];
+
+void solve()
+{
+    int n, k;
+    ll x, mn, mx;
+    cin>> n >> k >> x;
+
+    mn = arr[k];
+    mx = arr[n] - arr[n-k];
+    if (x >= mn && x <= mx)
+        cout<< ""YES"" << ""\n"";
+    else
+        cout<< ""NO"" << ""\n"";
+}
+
+int main()
+{
+    ios_base::sync_with_stdio(0);
+    cin.tie(0);
+    int t = 1, i;
+
+    arr[0] = 0;
+    for (i = 1; i <= 200000; i++)
+        arr[i] = arr[i-1] + ll(i);
+
+    cin>> t;
+    while (t--)
+        solve();
+
+    return 0;
+}"
+https://codeforces.com/contest/1878/problem/B,800,"#include<bits/stdc++.h>
+using namespace std;
+
+typedef long long ll;
+
+void solve()
+{
+    int n, i, j, sum = 0;
+    cin>> n;
+    for (i = 0; i < n; i++) {
+        sum += 3;
+        if (i % 2 == 1)
+            cout<< sum-1 << "" "";
+        else
+            cout<< sum << "" "";
+    }
+    cout<< ""\n"";
+}
+
+int main()
+{
+    ios_base::sync_with_stdio(0);
+    cin.tie(0);
+    int t = 1;
+    cin>> t;
+    while (t--)
+        solve();
+    return 0;
+}"
+https://codeforces.com/contest/1878/problem/A,800,"#include<bits/stdc++.h>
+using namespace std;
+
+typedef long long ll;
+
+void solve()
+{
+    int n, k, val, i, j;
+    bool found = false;
+    cin>> n >> k;
+    for (i = 0; i < n; i++) {
+        cin>> val;
+        if (val == k) {
+            found = true;
+        }
+    }
+    if (found)
+        cout<< ""YES"" << ""\n"";
+    else
+        cout<< ""NO"" << ""\n"";
+}
+
+int main()
+{
+    ios_base::sync_with_stdio(0);
+    cin.tie(0);
+    int t = 1;
+    cin>> t;
+    while (t--)
+        solve();
+    return 0;
+}"
+https://codeforces.com/contest/1873/problem/D,800,"#include<bits/stdc++.h>
+using namespace std;
+
+typedef long long ll;
+
+void solve()
+{
+    int k, n, i, j, top;
+    string s;
+    cin>> n >> k >> s;
+    stack<int> buc;
+
+    for (i = n-1; i >= 0; i--) {
+        if (s[i] == 'B')
+            buc.push(i);
+    }
+
+    if (k == 1 || buc.size() == 0)
+    {
+        cout<< buc.size() << ""\n"";
+        return;
+    } else if (k == n) {
+        if (buc.size() > 0)
+            cout<< 1 << ""\n"";
+        else
+            cout<< 0 << ""\n"";
+        return;
+    }
+
+    int cnt = 0;
+    while (!buc.empty()) {
+        top = buc.top();
+        cnt++;
+        buc.pop();
+        while (!buc.empty() && buc.top() < top+k)
+            buc.pop();
+    }
+    cout<< cnt << ""\n"";
+}
+
+int main()
+{
+    ios_base::sync_with_stdio(0);
+    cin.tie(0);
+    int t = 1;
+    cin>> t;
+    while (t--)
+        solve();
+    return 0;
+}"
+https://codeforces.com/contest/1873/problem/C,800,"#include<bits/stdc++.h>
+using namespace std;
+
+typedef long long ll;
+int arr[11][11];
+
+void solve()
+{
+    char arr2[11][11], ch;
+    int i, j, n = 10;
+    int ans = 0;
+    for (i = 1; i <= n; i++) {
+        for (j = 1; j <= n; j++) {
+            cin>> ch;
+            if (ch == 'X')
+                ans += arr[i][j];
+        }
+    }
+    cout<< ans << ""\n"";
+}
+
+int main()
+{
+    ios_base::sync_with_stdio(0);
+    //cin.tie(0);
+    int i, j, k;
+    for (i = 1; i <= 10; i++)
+        for (j = 1; j <= 10; j++)
+            arr[i][j] = 1;
+
+    for (i = 2; i <= 9; i++)
+        for (j = 2; j <= 9; j++)
+            arr[i][j] = 2;
+
+    for (i = 3; i <= 8; i++)
+        for (j = 3; j <= 8; j++)
+            arr[i][j] = 3;
+
+    for (i = 4; i <= 7; i++)
+        for (j = 4; j <= 7; j++)
+            arr[i][j] = 4;
+
+    for (i = 5; i <= 6; i++)
+        for (j = 5; j <= 6; j++)
+            arr[i][j] = 5;
+
+//    for (i = 1; i <= 10; i++) {
+//        for (j = 1; j <= 10; j++) {
+//            cout<< arr[i][j] << "" "";
+//        }
+//        cout<< ""\n"";
+//    }
+    int t = 1;
+    cin>> t;
+    while (t--)
+        solve();
+    return 0;
+}"
+https://codeforces.com/contest/1873/problem/B,800,"#include<bits/stdc++.h>
+using namespace std;
+
+typedef long long ll;
+
+void solve()
+{
+    int n, i, j, val;
+    vector<int> v;
+    cin>> n;
+
+    for (i = 0; i < n; i++)
+    {
+        cin>> val;
+        v.push_back(val);
+    }
+
+    sort(v.begin(), v.end());
+    v[0] += 1;
+    int prod = 1;
+
+    for (i = 0; i < n; i++)
+        prod *= v[i];
+
+    cout<< prod << ""\n"";
+}
+
+int main()
+{
+    ios_base::sync_with_stdio(0);
+    cin.tie(0);
+    int t = 1;
+    cin>> t;
+    while (t--)
+        solve();
+    return 0;
+}"
+https://codeforces.com/contest/1873/problem/A,800,"#include<bits/stdc++.h>
+using namespace std;
+
+typedef long long ll;
+
+void solve()
+{
+    string s;
+    cin>> s;
+    int i, j, cnt = 0;
+    if (s[0] == 'a')
+        cnt++;
+    if (s[1] == 'b')
+        cnt++;
+    if (s[2] == 'c')
+        cnt++;
+
+    if (cnt == 1 || cnt == 3)
+        cout<< ""YES"" << ""\n"";
+    else
+        cout<< ""NO"" << ""\n"";
+}
+
+int main()
+{
+    ios_base::sync_with_stdio(0);
+    //cin.tie(0);
+    int t = 1;
+    cin>> t;
+    while (t--)
+        solve();
+    return 0;
+}"
+https://codeforces.com/contest/1872/problem/A,800,"#include<bits/stdc++.h>
+using namespace std;
+
+typedef long long ll;
+
+void solve()
+{
+    double a, b, c, mean;
+    cin>> a >> b >> c;
+    if (a == b) {
+        cout<< 0 << ""\n"";
+        return;
+    } else if (abs(a-b) < c) {
+        cout<< 1 << ""\n"";
+        return;
+    }
+    mean = (a+b)/2.0;
+    double mx = max(a, b);
+    double mn = min(a, b);
+    double diff = mx - mean;
+    cout<< int(ceil(diff/c)) << ""\n"";
+}
+
+int main()
+{
+    ios_base::sync_with_stdio(0);
+    //cin.tie(0);
+    int t = 1, i;
+    cin>> t;
+    while (t--)
+        solve();
+    return 0;
+}"
+https://codeforces.com/contest/1850/problem/F,1300,"#include<bits/stdc++.h>
+using namespace std;
+
+typedef long long ll;
+
+void solve()
+{
+    int n, i, j, val;
+    cin>> n;
+    vector<int> v;
+    int arr[n+1];
+    memset(arr, 0, sizeof(arr));
+    for (i = 1; i <= n; i++) {
+        cin>> val;
+        if (val <= n)
+            arr[val] += 1;
+    }
+    int hop[n+1], start, len;
+    memset(hop, 0, sizeof(hop));
+    for (i = 1; i <= n; i++) {
+        if (arr[i] > 0) {
+            for (j = i; j <= n; j += i)
+                hop[j] += arr[i];
+        }
+    }
+    int mx = -1;
+    for (i = 1; i <= n; i++)
+        mx = max(mx, hop[i]);
+    cout<< mx << ""\n"";
+}
+
+int main()
+{
+    ios_base::sync_with_stdio(0);
+    cin.tie(0);
+    int t = 1, i;
+    cin>> t;
+    while (t--)
+        solve();
+    return 0;
+}"
+https://codeforces.com/contest/1850/problem/D,900,"#include<bits/stdc++.h>
+using namespace std;
+
+typedef long long ll;
+
+void solve()
+{
+    int n, i, j, k, cnt, mx = 1;
+    cin>> n >> k;
+    vector<int> v(n);
+    for (i = 0; i < n; i++)
+        cin>> v[i];
+    sort(v.begin(), v.end());
+    for (i = 0; i < n; ) {
+        cnt = 0;
+        for (j = i; j < n-1; j++) {
+            if (v[j+1] - v[j] <= k)
+                cnt++;
+            else
+                break;
+        }
+        i = j+1;
+        mx = max(cnt+1, mx);
+    }
+    cout<< n-mx << ""\n"";
+}
+
+int main()
+{
+    ios_base::sync_with_stdio(0);
+    cin.tie(0);
+    int t = 1, i;
+    cin>> t;
+    while (t--)
+        solve();
+    return 0;
+}"
+https://codeforces.com/contest/1850/problem/C,800,"#include<bits/stdc++.h>
+using namespace std;
+
+typedef long long ll;
+
+void solve()
+{
+    int n = 8, i, j, cnt[8], freq;
+    char arr[8][8];
+    for (i = 0; i < n; i++) {
+        for (j = 0; j < n; j++)
+            cin>> arr[i][j];
+    }
+    memset(cnt, 0, sizeof(cnt));
+    for (j = 0; j < n; j++) {
+        for (i = 0; i < n; i++) {
+            if (arr[i][j] != '.')
+                cnt[j]++;
+        }
+    }
+    int idx;
+    for (i = 0; i < n; i++) {
+        if (cnt[i] > 0) {
+            idx = i;
+            break;
+        }
+    }
+    for (i = 0; i < n; i++) {
+        if (arr[i][idx] != '.')
+            cout<< arr[i][idx];
+    }
+    cout<< ""\n"";
+}
+
+int main()
+{
+    ios_base::sync_with_stdio(0);
+    cin.tie(0);
+    int t = 1, i;
+    cin>> t;
+    while (t--)
+        solve();
+    return 0;
+}"
+https://codeforces.com/contest/1850/problem/B,800,"#include<bits/stdc++.h>
+using namespace std;
+
+typedef long long ll;
+
+void solve()
+{
+    priority_queue< pair<int, int> > pq;
+    int a, b, i, j, n;
+    cin>> n;
+    for (i = 1; i <= n; i++) {
+        cin>> a >> b;
+        if (a <= 10) {
+            pq.push(make_pair(b, i));
+        }
+    }
+    cout<< pq.top().second << ""\n"";
+}
+
+int main()
+{
+    ios_base::sync_with_stdio(0);
+    cin.tie(0);
+    int t = 1, i;
+    cin>> t;
+    while (t--)
+        solve();
+    return 0;
+}"
+https://codeforces.com/contest/1850/problem/A,800,"#include<bits/stdc++.h>
+using namespace std;
+
+typedef long long ll;
+
+void solve()
+{
+    int a, b, c;
+    cin>> a >> b >> c;
+    if (a+b >= 10 || a+c >= 10 || b+c >= 10)
+        cout<< ""YES"" << ""\n"";
+    else
+        cout<< ""NO"" << ""\n"";
+}
+
+int main()
+{
+    ios_base::sync_with_stdio(0);
+    //cin.tie(0);
+    int t = 1, i;
+    cin>> t;
+    while (t--)
+        solve();
+    return 0;
+}"
+https://codeforces.com/contest/1837/problem/D,1400,"#include<bits/stdc++.h>
+using namespace std;
+
+typedef long long ll;
+
+void solve()
+{
+    const int N = 200005;
+    int n, i, j, cnt1 = 0, cnt2 = 0, arr[N], cnt = 0;
+    vector<int> ans;
+    string s;
+    cin>> n >> s;
+
+    if (n%2 == 1) {
+        cout<< ""-1"" << ""\n"";
+        return;
+    }
+
+    ans.push_back(-1);
+    for (i = 0; i < n; i++) {
+        if (s[i] == '(')
+            cnt1++;
+        else
+            cnt2++;
+        if (cnt1-cnt2 == 0)
+            ans.push_back(i);
+        arr[i] = cnt1-cnt2;
+    }
+
+    if (arr[n-1] != 0) {
+        cout<< ""-1"" << ""\n"";
+        return;
+    }
+
+    int pos = 0, neg = 0;
+    for (i = 0; i < n; i++) {
+        if (arr[i] <= 0) {
+            neg++;
+        }
+        if (arr[i] >= 0)
+            pos++;
+    }
+
+    if (pos == n || neg == n) {
+        cout<< 1 << ""\n"";
+        for (i = 0; i < n; i++)
+            cout<< 1 << "" "";
+        cout<< ""\n"";
+    } else {
+        cout<< 2 << ""\n"";
+        for (i = 1; i < n; i++) {
+            if (arr[i] == 0) {
+                if (arr[i-1] < 1)
+                    arr[i] = -1;
+                else
+                    arr[i] = 1;
+            }
+        }
+        for (i = 0; i < n; i++) {
+            if (arr[i] > 0)
+                cout<< 1 << "" "";
+            else
+                cout<< 2 << "" "";
+        }
+        cout<< ""\n"";
+    }
+}
+
+int main()
+{
+    ios_base::sync_with_stdio(0);
+    cin.tie(0);
+    int t = 1, i;
+    cin>> t;
+    while (t--)
+        solve();
+    return 0;
+}"
+https://codeforces.com/contest/1840/problem/D,1400,"#include<bits/stdc++.h>
+using namespace std;
+
+typedef long long ll;
+
+void solve()
+{
+    const int N = 200001;
+    int n, i, j, arr[N], l, r, m;
+    cin>> n;
+    for (i = 0; i < n; i++)
+        cin>> arr[i];
+    sort(arr, arr+n);
+
+    l = -1;
+    r = 1e9;
+    while (r-l > 1) {
+        m = (l+r) >> 1;
+        i = 0;
+        while (i+1 < n && arr[i+1]-arr[0] <= 2*m)
+            ++i;
+        j = n-1;
+        while (j-1 >= 0 && arr[n-1]-arr[j-1] <= 2*m)
+            --j;
+        ++i;
+        --j;
+        if (i > j || arr[j]-arr[i] <= 2*m)
+            r = m;
+        else
+            l = m;
+    }
+    cout<< r << ""\n"";
+}
+
+int main()
+{
+    int i, T = 1;
+    cin>> T;
+    while (T--)
+        solve();
+    return 0;
+}"
+https://codeforces.com/contest/1844/problem/D,1400,"#include<bits/stdc++.h>
+using namespace std;
+
+typedef long long ll;
+
+void solve()
+{
+    int n, i, j;
+    string s1 = ""ab"", s2 = """", s3 = """";
+    cin>> n;
+    if (n%2 == 1) {
+        while(true) {
+            s2 += s1;
+            if (s2.size() > n) break;
+        }
+        for (i = 0; i < n; i++)
+            cout<< s2[i];
+        cout<< ""\n"";
+        return;
+    } else if (n == 2) {
+        cout<< ""ab"" << ""\n"";
+        return;
+    }
+    for (i = 3; ; i++) {
+        if (n%i != 0) break;
+    }
+    for (j = 0; j < i; j++) {
+        s2 += ('a' + j);
+    }
+    while(true) {
+        s3 += s2;
+        if (s3.size() > n) break;
+    }
+    for (i = 0; i < n; i++)
+        cout<< s3[i];
+    cout<< ""\n"";
+}
+
+int main()
+{
+    int i, T = 1;
+    cin>> T;
+    while (T--)
+        solve();
+    return 0;
+}"
+https://codeforces.com/contest/1850/problem/G,1500,"#include<bits/stdc++.h>
+using namespace std;
+
+typedef long long ll;
+
+struct point2D {
+    ll x, y;
+};
+
+const int N = 200001;
+point2D points[N], rot_points[N];
+
+bool cmp_x(point2D a, point2D b) {return a.x < b.x;}
+bool cmp_y(point2D a, point2D b) {return a.y < b.y;}
+
+ll calculate_count_x(point2D points[], int n) {
+    int i, j, cnt;
+    ll sum = 0, tmp;
+
+    for (i = 0; i < n-1;) {
+        cnt = 0;
+        j = i+1;
+        while (j < n && points[j].x == points[i].x) {
+            cnt++;
+            j++;
+        }
+        if (cnt > 0) {
+            tmp = ll(cnt);
+            sum += tmp*(tmp+1);
+        }
+        i = j;
+    }
+    return sum;
+}
+
+ll calculate_count_y(point2D points[], int n) {
+    int i, j, cnt;
+    ll sum = 0, tmp;
+
+    for (i = 0; i < n-1;) {
+        cnt = 0;
+        j = i+1;
+        while (j < n && points[j].y == points[i].y) {
+            cnt++;
+            j++;
+        }
+        if (cnt > 0) {
+            tmp = ll(cnt);
+            sum += tmp*(tmp+1);
+        }
+        i = j;
+    }
+    return sum;
+}
+
+void solve()
+{
+    int n, i, j, cnt;
+    ll x, y, sum=0;
+    vector<int> ans;
+    cin>> n;
+
+    for (i = 0; i < n; i++) {
+        cin>> x >> y;
+        points[i].x = x;
+        points[i].y = y;
+        rot_points[i].x = x - y;
+        rot_points[i].y = x + y;
+    }
+
+    sort(points, points+n, cmp_x);
+    sum += calculate_count_x(points, n);
+    sort(points, points+n, cmp_y);
+    sum += calculate_count_y(points, n);
+
+    sort(rot_points, rot_points+n, cmp_x);
+    sum += calculate_count_x(rot_points, n);
+    sort(rot_points, rot_points+n, cmp_y);
+    sum += calculate_count_y(rot_points, n);
+    cout<< sum << ""\n"";
+}
+
+int main()
+{
+    int i, T = 1;
+    cin>> T;
+    while (T--)
+        solve();
+    return 0;
+}"
+https://codeforces.com/contest/1838/problem/C,1400,"/***
+* @author: Jakir Hasan
+*/
+
+#include<bits/stdc++.h>
+using namespace std;
+
+int arr[1001][1001];
+
+bool isPrime(int n) {
+    int i;
+    for (i = 2; i < n; i++) {
+        if (n%i == 0) return false;
+    }
+    return true;
+}
+
+typedef long long ll;
+
+int test = 1;
+
+void solve()
+{
+    int n, m, i, j, cnt;
+    cin>> n >> m;
+    bool prime_n, prime_m;
+    prime_n = isPrime(n);
+    prime_m = isPrime(m);
+    cnt = 0;
+
+    for (i = 1; i <= n; i++) {
+        for (j = 1; j <= m; j++) {
+            cnt++;
+            arr[i][j] = cnt;
+        }
+    }
+
+    if (!prime_m) {
+        for (i = 1; i <= n; i++) {
+            for (j = 1; j <= m; j++) {
+                    cout<< arr[i][j] << "" "";
+            }
+            cout<< ""\n"";
+        }
+        return;
+    } else if (prime_n && prime_m) {
+        for (i = 1; i <= n; i += 2) {
+            for (j = 1; j <= m; j++)
+                cout<< arr[i][j] << "" "";
+            cout<< ""\n"";
+        }
+        for (i = 2; i <= n; i += 2) {
+            for (j = 1; j <= m; j++)
+                cout<< arr[i][j] << "" "";
+            cout<< ""\n"";
+        }
+        return;
+    } else {
+        for (i = 1; i <= n; i++) {
+            cnt = 1;
+            for (j = i; cnt <= m; j += n) {
+                cout<< j << "" "";
+                cnt++;
+            }
+            cout<< ""\n"";
+        }
+    }
+}
+
+int main()
+{
+    int i, T = 1;
+    cin>> T;
+    while (T--)
+        solve();
+    return 0;
+}"
+https://codeforces.com/contest/1838/problem/B,1100,"#include<bits/stdc++.h>
+using namespace std;
+
+typedef long long ll;
+
+void solve()
+{
+    const int N = 200005;
+    int n, i, j, p[N], pos1, pos2, posn, mn, mx;
+    cin>> n;
+    for (i = 1; i <= n; i++) {
+        cin>> p[i];
+        if (p[i] == 1) pos1 = i;
+        if (p[i] == 2) pos2 = i;
+        if (p[i] == n) posn = i;
+    }
+    mn = min(pos1, pos2);
+    mx = max(pos1, pos2);
+    if (posn > mn && posn < mx)
+        printf(""1 1\n"");
+    else {
+        if (posn < mn) printf(""%d %d\n"", posn, mn);
+        else printf(""%d %d\n"", mx, posn);
+    }
+}
+
+int main()
+{
+    int i, T = 1;
+    cin>> T;
+    while (T--)
+        solve();
+    return 0;
+}"
+https://codeforces.com/contest/1840/problem/C,1000,"#include<bits/stdc++.h>
+using namespace std;
+
+typedef long long ll;
+
+void solve()
+{
+    const int N = 200005;
+    int n, k, q, arr[N], pos[N], i, j, one = 0, zero = 0, cnt;
+    ll tmp, ans;
+    cin>> n >> k >> q;
+
+    for (i = 1; i <= n; i++) {
+        cin>> arr[i];
+        if (arr[i] <= q) {
+            pos[i] = 1;
+            one++;
+        }
+        else {
+            pos[i] = 0;
+            zero++;
+        }
+    }
+
+    if (one == n) {
+        tmp = ll(n-k+1);
+        ans = (tmp*(tmp+1))/2;
+        cout<< ans << ""\n"";
+        return;
+    } else if (zero == n) {
+        cout<< 0 << ""\n"";
+        return;
+    }
+
+    vector<int> v;
+    for (i = 1; i <= n; ) {
+        if (pos[i] == 1) {
+            cnt = 0;
+            while (i <= n && pos[i] == 1) {
+                cnt++;
+                i++;
+            }
+            if (cnt >= k) v.push_back(cnt);
+        }
+        else
+            i++;
+    }
+
+    if (v.size() == 0) {
+        cout<< 0 << ""\n"";
+        return;
+    }
+
+    ans = 0;
+    for (i = 0; i < v.size(); i++) {
+        tmp = ll(v[i]-k+1);
+        ans += (tmp*(tmp+1))/2;
+    }
+    cout<< ans << ""\n"";
+}
+
+int main()
+{
+    int i, T = 1;
+    cin>> T;
+    while (T--)
+        solve();
+    return 0;
+}"
+https://codeforces.com/contest/1834/problem/C,1200,"#include<bits/stdc++.h>
+using namespace std;
+
+typedef long long ll;
+
+void solve()
+{
+    string s, t, tmp;
+    int i, j, n, cnt = 0, cnt_r = 0, ans1, ans2;
+    cin>> n >> s >> t;
+    if (s == t) {
+        cout<< 0 << ""\n"";
+        return;
+    }
+    tmp = s;
+    reverse(tmp.begin(), tmp.end());
+    for (i = 0; i < n; i++) {
+        if (s[i] != t[i]) cnt++;
+        if (tmp[i] != t[i]) cnt_r++;
+    }
+
+    ans1 = 2*cnt - cnt%2;
+    ans2 = 2*cnt_r - (1-cnt_r%2);
+    if (cnt_r == 0) {
+        ans2 = 2;
+    }
+    cout<< min(ans1, ans2) << ""\n"";
+}
+
+int main()
+{
+    int i, T = 1;
+    cin>> T;
+    while (T--)
+        solve();
+    return 0;
+}
+ "
+https://codeforces.com/contest/1841/problem/B,1000,"#include<bits/stdc++.h>
+using namespace std;
+
+typedef long long ll;
+
+void solve()
+{
+    int n, i, j, num;
+    vector<int> v;
+    cin>> n;
+    bool found = false;
+    for (i = 0; i < n; i++) {
+        cin>> num;
+        if (v.size() == 0) {
+            v.push_back(num);
+            cout<< 1;
+            continue;
+        }
+        else if (!found) {
+            if (v.back() <= num) {
+                v.push_back(num);
+                cout<< 1;
+            } else {
+                if (num <= v.front()) {
+                    v.push_back(num);
+                    cout<< 1;
+                    found = true;
+                } else {
+                    cout<< 0;
+                }
+            }
+        }
+        else {
+            if (num >= v.back() && num <= v.front()) {
+                cout<< 1;
+                v.push_back(num);
+            }
+            else cout<< 0;
+        }
+    }
+    cout<< ""\n"";
+}
+
+int main()
+{
+    int i, T = 1;
+    cin>> T;
+    while (T--)
+        solve();
+    return 0;
+}
+ "
+https://codeforces.com/contest/1834/problem/B,1000,"#include<bits/stdc++.h>
+using namespace std;
+
+typedef long long ll;
+
+bool cmp(string a, string b) {
+    int n = a.size();
+    bool first = true;
+    for (int j = 0; j < n; j++) {
+        if (a[j] - '0' < b[j] - '0') {
+            first = false;
+            break;
+        }
+    }
+    return first;
+}
+
+void solve()
+{
+    string a, b, big, small;
+    int n, m, i, j, ans;
+    cin>> a >> b;
+    n = a.size();
+    m = b.size();
+    if (n == m)
+    {
+        if (a == b)
+        {
+            cout<< 0 << ""\n"";
+            return;
+        }
+        bool first = cmp(a, b);
+        if (first) {
+            big = a;
+            small = b;
+        } else {
+            big = b;
+            small = a;
+        }
+        ans = 0;
+        for (j = 0; j < n; j++) {
+            if (big[j] != small[j]) {
+                ans = (n-j-1)*9 + int(abs((big[j] - '0') - (small[j] - '0')));
+                break;
+            }
+        }
+        cout<< ans << ""\n"";
+    }
+    else {
+        if (n > m)
+        {
+            big = a;
+            small = b;
+        }
+        else {
+            big = b;
+            small = a;
+        }
+        ans = (max(n, m)-1)*9 + (big[0] - '0');
+        bool found = false;
+        for (j = 1; j < max(n, m)-min(n, m); j++)
+        {
+            if (big[j] != '9') {
+                found = true;
+                break;
+            }
+        }
+//        if (found)
+//            ans -= 1;
+        cout<< ans << ""\n"";
+    }
+}
+
+int main()
+{
+    int i, T = 1;
+    cin>> T;
+    while (T--)
+        solve();
+    return 0;
+}
+/*
+1
+39991478 7869
+*/
+ "
+https://codeforces.com/contest/1836/problem/C,1700,"#include<bits/stdc++.h>
+using namespace std;
+
+typedef long long ll;
+
+int power(int a, int e)
+{
+    if (e == 0)
+        return 1;
+    return e == 1 ? a : a * power(a, e-1);
+}
+
+void answer(int a, int b)
+{
+    cout<< a << "" + "" << b << "" = "" << a+b << ""\n"";
+}
+
+void solve()
+{
+    int a, b, c, i, left, right, have;
+    ll k;
+    cin>> a >> b >> c >> k;
+
+    bool good = false;
+    for (i = power(10, a-1); i < power(10, a); ++i)
+    {
+        left = max(power(10, b-1), power(10, c-1) - i);
+        right = min(power(10, b)-1, power(10, c)-1-i);
+        if (left > right) continue;
+
+        have = right-left+1;
+        if (k <= have) {
+            answer(i, left+k-1);
+            good = true;
+            break;
+        }
+        k -= have;
+    }
+    if (!good) cout<< -1 << ""\n"";
+}
+
+int main()
+{
+    int i, T = 1;
+    cin>> T;
+    while (T--)
+        solve();
+    return 0;
+}
+ "
+https://codeforces.com/contest/1836/problem/B,1100,"#include<bits/stdc++.h>
+using namespace std;
+
+typedef long long ll;
+
+void solve()
+{
+    ll n, k, g, upper, total1, total2, r, bonus;
+    int i, j;
+    cin>> n >> k >> g;
+
+    upper = ll(ceil(g/2.0)) - 1;
+    total1 = n*upper;
+    total2 = k*g;
+
+    if (n*upper == k*g)
+        cout<< n*upper << ""\n"";
+    else if (total1 < total2)
+    {
+        r = total2 - (n-1)*upper;
+        bonus = (n-1)*upper;
+        r %= g;
+        if (r > upper)
+            bonus -= (g-r);
+        else
+            bonus += r;
+
+        cout<< bonus << ""\n"";
+    }
+    else
+        cout<< total2 << ""\n"";
+}
+
+int main()
+{
+    int i, T = 1;
+    cin>> T;
+    for (i = 0; i < T; i++)
+        solve();
+    return 0;
+}
+ "
+https://codeforces.com/contest/1843/problem/C,800,"#include<bits/stdc++.h>
+using namespace std;
+
+typedef long long ll;
+
+void solve()
+{
+    ll n, sum;
+    cin>> n;
+    sum = n;
+    while (n / 2 > 0)
+    {
+        sum += (n/2);
+        n /= 2;
+    }
+    cout<< sum << ""\n"";
+}
+
+int main()
+{
+    int i, T = 1;
+    cin>> T;
+    for (i = 0; i < T; i++)
+        solve();
+    return 0;
+}
+ "
+https://codeforces.com/contest/1843/problem/B,800,"#include<bits/stdc++.h>
+using namespace std;
+
+typedef long long ll;
+
+void solve()
+{
+    int n, i, j, pos = 0, neg = 0, zero = 0, num, step = 0, m;
+    ll sum = 0;
+    vector<int> v;
+    cin>> n;
+    for (i = 0; i < n; i++)
+    {
+        cin>> num;
+        if (num < 0)
+        {
+            neg++;
+            v.push_back(num);
+        }
+        else if (num > 0)
+        {
+            pos++;
+            v.push_back(num);
+        }
+        else
+            zero++;
+
+        sum += ll(abs(num));
+    }
+
+    if (pos + zero == n)
+    {
+        cout<< sum << "" "" << 0 << ""\n"";
+        return;
+    }
+    else if (neg + zero == n)
+    {
+        cout<< sum << "" "" << 1 << ""\n"";
+        return;
+    }
+
+    m = v.size();
+    for (i = 0; i < m; )
+    {
+        if (v[i] < 0)
+        {
+            step++;
+            while (i < n && v[i] < 0)
+                i++;
+        }
+        else
+            i++;
+    }
+    cout<< sum << "" "" << step << ""\n"";
+}
+
+int main()
+{
+    int i, T = 1;
+    cin>> T;
+    for (i = 0; i < T; i++)
+        solve();
+
+    return 0;
+}
+ "
+https://codeforces.com/contest/1842/problem/C,1500,"#include<bits/stdc++.h>
+using namespace std;
+
+typedef long long ll;
+int a[200001];
+int dp[200001];
+int buc[200001];
+
+void solve(int t)
+{
+    int n, i, j;
+    cin>> n;
+
+    for (i = 1; i <= n; i++)
+        cin>> a[i];
+
+    for (i = 1; i <= n; i++)
+        buc[i] = INT_MAX;
+
+    dp[0] = 0;
+    for (i = 1; i <= n; i++)
+    {
+        dp[i] = min(dp[i-1]+1, buc[a[i]]);
+        buc[a[i]] = min(buc[a[i]], dp[i-1]);
+    }
+    cout<< n - dp[n] << ""\n"";
+}
+
+int main()
+{
+    int test_case = 1, t;
+    cin>> test_case;
+
+    for (t = 1; t <= test_case; t++)
+        solve(t);
+
+    return 0;
+}
+ "
+https://codeforces.com/contest/1842/problem/B,1100,"#include<bits/stdc++.h>
+using namespace std;
+
+typedef long long ll;
+
+void solve(int t)
+{
+    int n, i, j;
+    int x, arr[3][100005];
+    cin>> n >> x;
+
+    for (i = 0; i < 3; i++)
+        for (j = 0; j < n; j++)
+            cin>> arr[i][j];
+
+    ll global = 0;
+    for (i = 0; i < 3; i++) {
+        for (j = 0; j < n; j++) {
+            if (ll(arr[i][j] | x) == ll(x))
+                global |= arr[i][j];
+            else
+                break;
+        }
+    }
+
+    if (global == x)
+        cout<< ""YES"" << ""\n"";
+    else
+        cout<< ""NO"" << ""\n"";
+}
+
+int main()
+{
+    int test_case = 1, t;
+    cin>> test_case;
+
+    for (t = 1; t <= test_case; t++)
+        solve(t);
+
+    return 0;
+}
+ "
+https://codeforces.com/contest/1845/problem/C,1400,"#include<bits/stdc++.h>
+using namespace std;
+
+typedef long long ll;
+
+void solve(int t)
+{
+    int n, m, i, j, mx, nmx, low, high, cur;
+    string s, l, r;
+    char ch;
+    cin>> s >> m >> l >> r;
+
+    n = s.size();
+    mx = 0;
+    for (i = 0; i < m; i++)
+    {
+        low = l[i] - '0';
+        high = r[i] - '0';
+        nmx = mx;
+        for (j = low; j <= high; j++)
+        {
+            cur = mx;
+            while (cur < n && s[cur]-'0' != j)
+                cur += 1;
+
+            nmx = max(nmx, cur);
+        }
+        mx = nmx + 1;
+    }
+    if (mx > n)
+        printf(""YES\n"");
+    else
+        printf(""NO\n"");
+}
+
+int main()
+{
+    int test_case = 1, t;
+    cin>> test_case;
+
+    for (t = 1; t <= test_case; t++)
+        solve(t);
+
+    return 0;
+}
+ "
+https://codeforces.com/contest/1845/problem/B,900,"#include<bits/stdc++.h>
+using namespace std;
+
+typedef long long ll;
+
+void solve(int t)
+{
+    ll xa, ya, xb, yb, xc, yc, d_ab, d_ac, d_bc, common;
+    cin>> xa >> ya;
+    cin>> xb >> yb;
+    cin>> xc >> yc;
+
+    d_ab = ll(abs(xa - xb)) + ll(abs(ya - yb));
+    d_ac = ll(abs(xa - xc)) + ll(abs(ya - yc));
+    d_bc = ll(abs(xc - xb)) + ll(abs(yc - yb));
+
+    common = (d_ab + d_ac - d_bc) / 2 + 1;
+    cout<< common << ""\n"";
+}
+
+int main()
+{
+    int test_case = 1, t;
+    cin>> test_case;
+
+    for (t = 1; t <= test_case; t++)
+        solve(t);
+
+    return 0;
+}
+ "
+https://codeforces.com/contest/1840/problem/B,1100,"#include<bits/stdc++.h>
+using namespace std;
+
+typedef long long ll;
+
+void solve()
+{
+   int n, k, i, j;
+   cin>> n >> k;
+
+   k = min(k, 30);
+   cout<< min((1<<k), n+1) << ""\n"";
+}
+
+int main()
+{
+    int t = 1;
+    cin>> t;
+
+    while (t--)
+        solve();
+
+    return 0;
+}"
+https://codeforces.com/contest/1840/problem/A,800,"/**
+* @author: Jakir Hasan
+* 21-04-2023
+* Large Integer Multiplication
+*/
+
+#include<bits/stdc++.h>
+using namespace std;
+
+typedef long long ll;
+
+void solve()
+{
+    int n, i, j;
+    string s;
+    stack<char> a;
+    char ch;
+    cin>> n >> s;
+
+    for (i = 0; i < n; i++)
+    {
+        ch = s[i];
+        if (a.empty())
+            a.push(ch);
+        else
+        {
+            if (ch == a.top())
+            {
+                cout<< ch;
+                a.pop();
+            }
+        }
+    }
+    cout<< ""\n"";
+}
+
+int main()
+{
+    int t = 1;
+    cin>> t;
+
+    while (t--)
+        solve();
+
+    return 0;
+}"
+https://codeforces.com/contest/1829/problem/C,800,"#include<bits/stdc++.h>
+using namespace std;
+
+typedef long long ll;
+
+void solve()
+{
+    int n, cost, mx1, mx2, mx3, mx4;
+    string st;
+    char a, b;
+    cin>> n;
+
+    int i, j;
+    mx1 = mx2 = mx3 = INT_MAX;
+    for (i = 0; i < n; i++)
+    {
+        cin>> cost >> st;
+        a = st[0];
+        b = st[1];
+
+        if (a == '1' && b == '1')
+        {
+            mx1 = min(mx1, cost);
+        }
+
+        if (a == '1')
+            mx2 = min(mx2, cost);
+
+        if (b == '1')
+            mx3 = min(mx3, cost);
+    }
+
+    if (mx2 == INT_MAX || mx3 == INT_MAX)
+        cout<< -1 << ""\n"";
+    else
+    {
+        mx4 = mx2 + mx3;
+        cout<< min(mx1, mx4) << ""\n"";
+    }
+
+}
+
+int main()
+{
+    int t = 1;
+    cin>> t;
+
+    while (t--)
+        solve();
+
+    return 0;
+}"
+https://codeforces.com/contest/1829/problem/B,800,"#include<bits/stdc++.h>
+using namespace std;
+
+typedef long long ll;
+
+void solve()
+{
+    int n, i, j, arr[500], cnt, mx = 0, num;
+    cin>> n;
+
+    cnt = 0;
+    for (i = 0; i < n; i++)
+    {
+        cin>> num;
+        if (num == 0)
+        {
+            cnt++;
+            mx = max(mx, cnt);
+        }
+        else
+        {
+            cnt = 0;
+        }
+    }
+    cout<< mx << ""\n"";
+}
+
+int main()
+{
+    int t = 1;
+    cin>> t;
+
+    while (t--)
+        solve();
+
+    return 0;
+}"
+https://codeforces.com/contest/1829/problem/A,800,"#include<bits/stdc++.h>
+using namespace std;
+
+typedef long long ll;
+
+void solve()
+{
+    string st, target = ""codeforces"";
+    int i, cnt = 0;
+    cin>> st;
+
+    for (i = 0; i < 10; i++)
+    {
+        if (st[i] != target[i])
+            cnt++;
+    }
+    cout<< cnt << ""\n"";
+}
+
+int main()
+{
+    int t = 1;
+    cin>> t;
+
+    while (t--)
+        solve();
+
+    return 0;
+}"
+https://codeforces.com/contest/1816/problem/A,800,"#include<bits/stdc++.h>
+using namespace std;
+
+typedef long long ll;
+
+void solve()
+{
+    int a, b;
+    cin>> a >> b;
+
+    cout<< 2 << ""\n"";
+    if (a == b) {
+        printf(""%d %d\n"", a, b-1);
+    }
+    else {
+        if (a < b) {
+            printf(""%d %d\n"", a+1, 1);
+        }
+        else {
+            printf(""%d %d\n"", 1, b+1);
+        }
+    }
+    cout<< a << "" "" << b << ""\n"";
+}
+
+int main()
+{
+    int t = 1;
+    cin>> t;
+
+    while (t--)
+        solve();
+
+    return 0;
+}"
+https://codeforces.com/contest/1366/problem/A,1100,"#include<bits/stdc++.h>
+using namespace std;
+
+typedef long long ll;
+
+void solve()
+{
+    ll a, b, ans;
+    cin>> a >> b;
+
+    ans = (a + b) / 3;
+    if (a > ans && b > ans)
+        cout<< ans << ""\n"";
+    else
+        cout<< min(a, b) << ""\n"";
+}
+
+int main()
+{
+    int t = 1;
+    cin>> t;
+
+    while (t--)
+        solve();
+
+    return 0;
+}"
+https://codeforces.com/contest/1472/problem/C,1100,"#include<bits/stdc++.h>
+using namespace std;
+
+typedef long long ll;
+
+void solve()
+{
+    int n, i, j, arr[200005], score[200005], mx = -1, idx;
+    cin>> n;
+
+    for (i = 1; i <= n; i++)
+        cin>> arr[i];
+
+    for (j = n; j >= 1; j--) {
+        idx = j + arr[j];
+        if (idx <= n) {
+            score[j] = score[j+arr[j]] + arr[j];
+        }
+        else
+            score[j] = arr[j];
+
+        mx = max(mx, score[j]);
+    }
+
+    cout<< mx << ""\n"";
+
+}
+
+int main()
+{
+    int t = 1;
+    cin>> t;
+
+    while (t--)
+        solve();
+
+    return 0;
+}"
+https://codeforces.com/contest/1490/problem/C,1100,"#include<bits/stdc++.h>
+using namespace std;
+
+typedef long long ll;
+
+int main()
+{
+    map<ll, ll> mp;
+    ll n, num, val, rem;
+    int t, i, j;
+    bool found;
+    cin>> t;
+
+    for (num = 1; num <= 10000; num++) {
+        val = num*num*num;
+        mp[val] = num;
+    }
+
+    for (i = 0; i < t; i++) {
+        cin>> n;
+
+        found = false;
+        map<ll, ll>::iterator it;
+
+        for (it = mp.begin(); it != mp.end(); it++) {
+            val = it->first;
+            if (val > n) {
+                break;
+            }
+
+            rem = n - val;
+            if (mp.count(rem)) {
+                found = true;
+                break;
+            }
+        }
+
+        if (found)
+            cout<< ""YES"" << ""\n"";
+        else
+            cout<< ""NO"" << ""\n"";
+    }
+
+    return 0;
+}"
+https://codeforces.com/contest/1774/problem/A,800,"#include<bits/stdc++.h>
+using namespace std;
+
+typedef long long ll;
+
+void solve()
+{
+    int n, i, j, cnt, total;
+    string s, ans = """", ans_rev;
+    cin>> n >> s;
+
+    cnt = 0;
+    for (i = 0; i < n; i++) {
+        if (s[i] == '1')
+            cnt++;
+    }
+    cnt /= 2;
+
+    total = 0;
+    for (i = n-1; i > 0; i--) {
+        if (s[i] == '1' && total < cnt) {
+            ans += '-';
+            total++;
+        }
+        else
+            ans += '+';
+    }
+
+    reverse(ans.begin(), ans.end());
+    cout<< ans << ""\n"";
+
+}
+
+int main()
+{
+    int t = 1;
+    cin>> t;
+
+    while (t--)
+        solve();
+
+    return 0;
+}"
+https://codeforces.com/contest/1791/problem/A,800,"#include<bits/stdc++.h>
+using namespace std;
+
+int main()
+{
+    int t, i, j;
+    string s = ""codeforces"";
+    char c;
+    bool found;
+    cin>> t;
+
+    for (i = 0; i < t; i++) {
+        cin>> c;
+        found = false;
+
+        for (j = 0; j < s.size(); j++) {
+            if (c == s[j]) {
+                found = true;
+                break;
+            }
+        }
+        if (found)
+            cout<< ""YES"" << ""\n"";
+        else
+            cout<< ""NO"" << ""\n"";
+    }
+
+
+    return 0;
+}"
+https://codeforces.com/contest/1792/problem/A,800,"#include<bits/stdc++.h>
+using namespace std;
+
+typedef long long ll;
+
+void solve()
+{
+    int n, cnt1 = 0, cnt2 = 0, i, j, num;
+    cin>> n;
+    for (i = 1; i <= n; i++) {
+        cin>> num;
+        if (num == 1) 
+            cnt1++;
+        else
+            cnt2++;
+    }
+
+    cout<< cnt2 + int(ceil(cnt1/2.0)) << ""\n"";
+}
+
+int main()
+{
+    int t = 1;
+    cin>> t;
+
+    while (t--)
+        solve();
+
+    return 0;
+}"
+https://codeforces.com/contest/1772/problem/C,1000,"#include<bits/stdc++.h>
+using namespace std;
+
+typedef long long ll;
+
+void solve()
+{
+    int n, k, i, j, arr[50000], taken[50000], id;
+    arr[1] = 1;
+    cin>> k >> n;
+
+    memset(taken, 0, sizeof(taken));
+    taken[1] = 1;
+    for (i = 2; i <= 40; i++) {
+        arr[i] = arr[i-1] + i - 1;
+        id = arr[i];
+        taken[id] = 1;
+    }
+
+    if (arr[k] <= n) {
+        for (i = 1; i <= k; i++)
+            cout<< arr[i] << "" "";
+        cout<< ""\n"";
+        return;
+    }
+    int cnt = 0;
+    for (i = 1; i <= n; i++) {
+        if (taken[i] == 1)
+            cnt++;
+    }
+
+    for (i = n; i >= 1 && cnt != k; i--) {
+        if (taken[i] == 0) {
+            taken[i] = 1;
+            cnt++;
+        }
+    }
+
+    for (i = 1; i <= n; i++) {
+        if (taken[i] == 1) {
+            cout<< i << "" "";
+        }
+    }
+    cout<< ""\n"";
+}
+
+int main()
+{
+    int t = 1;
+    cin>> t;
+
+    while (t--)
+        solve();
+
+    return 0;
+}"
+https://codeforces.com/contest/1772/problem/B,800,"#include<bits/stdc++.h>
+using namespace std;
+
+typedef long long ll;
+
+void solve()
+{
+    int i, j, arr[4][4];
+    for (i = 1; i <= 2; i++) {
+        for (j = 1; j <= 2; j++)
+            cin>> arr[i][j];
+    }
+
+    if ((arr[1][1] < arr[1][2] && arr[2][1] < arr[2][2]) && (arr[1][1] < arr[2][1] && arr[1][2] < arr[2][2]))
+        cout<< ""YES"" << ""\n"";
+    else if ((arr[2][1] < arr[1][1] && arr[2][2] < arr[1][2]) && (arr[2][1] < arr[2][2] && arr[1][1] < arr[1][2]))
+        cout<< ""YES"" << ""\n"";
+    else if ((arr[2][2] < arr[2][1] && arr[1][2] < arr[1][1]) && (arr[2][2] < arr[1][2] && arr[2][1] < arr[1][1]))
+        cout<< ""YES"" << ""\n"";
+    else if ((arr[1][2] < arr[2][2] && arr[1][1] < arr[2][1]) && (arr[1][2] < arr[1][1] && arr[2][2] < arr[2][1]))
+        cout<< ""YES"" << ""\n"";
+    else
+        cout<< ""NO"" << ""\n"";
+}
+
+int main()
+{
+    int t = 1;
+    cin>> t;
+
+    while (t--)
+        solve();
+
+    return 0;
+}"
+https://codeforces.com/contest/1772/problem/A,800,"#include<bits/stdc++.h>
+using namespace std;
+
+typedef long long ll;
+
+void solve()
+{
+    int a, b;
+    char c;
+    scanf(""%d%c%d"", &a, &c, &b);
+    cout<< a+b << ""\n"";
+}
+
+int main()
+{
+    int t = 1;
+    cin>> t;
+
+    while (t--)
+        solve();
+
+    return 0;
+}"
+https://codeforces.com/contest/1506/problem/C,1000,"#include<bits/stdc++.h>
+using namespace std;
+
+typedef long long ll;
+
+void solve()
+{
+    int n, m, i, j, mx = 0;
+    string a, b, c;
+
+    vector<string> v1, v2;
+    cin>> a >> b;
+    n = a.size();
+    m = b.size();
+
+    for (i = 0; i < n; i++) {
+        c = """";
+        for (j = i; j < n; j++) {
+            c += a[j];
+            v1.push_back(c);
+        }
+    }
+
+    for (i = 0; i < m; i++) {
+        c = """";
+        for (j = i; j < m; j++) {
+            c += b[j];
+            v2.push_back(c);
+        }
+    }
+
+    for (i = 0; i < v1.size(); i++) {
+        for (j = 0; j < v2.size(); j++) {
+            if (v1[i] == v2[j]) {
+                int x = v1[i].size();
+                mx = max(mx, x);
+            }
+        }
+    }
+    cout<< n + m - 2 * mx << ""\n"";
+
+}
+
+int main()
+{
+    int t = 1;
+    cin>> t;
+
+    while (t--)
+        solve();
+
+    return 0;
+}"
+https://codeforces.com/contest/1144/problem/C,1000,"#include<bits/stdc++.h>
+using namespace std;
+
+typedef long long ll;
+
+void solve()
+{
+    int n, arr[200005], i, j, num, mx = -1, cnt;
+    cin>> n;
+    memset(arr, 0, sizeof(arr));
+    for (i = 0; i < n; i++) {
+        cin>> num;
+        arr[num] += 1;
+        mx = max(mx, num);
+    }
+
+    cnt = 0;
+    bool found = true;
+    for (i = 0; i <= mx; i++) {
+        if (arr[i] > 2) {
+            found = false;
+        }
+
+        if (arr[i] == 1 || arr[i] == 2)
+            cnt++;
+
+    }
+
+    if (!found) {
+        cout<< ""NO"" << ""\n"";
+        return;
+    }
+
+    cout<< ""YES"" << ""\n"";
+    cout<< cnt << ""\n"";
+
+    for (i = 0; i <= mx; i++) {
+        if (arr[i] > 0) {
+            cout<< i << "" "";
+            arr[i]--;
+        }
+    }
+
+    cout<< ""\n"";
+    cout<< n-cnt << ""\n"";
+
+    for (i = mx; i >= 0; i--) {
+        if (arr[i] > 0) {
+            cout<< i << "" "";
+            arr[i]--;
+        }
+    }
+    cout<< ""\n"";
+}
+
+int main()
+{
+    int t = 1;
+    //cin>> t;
+
+    while (t--)
+        solve();
+
+    return 0;
+}"
+https://codeforces.com/contest/1102/problem/B,1400,"#include<bits/stdc++.h>
+using namespace std;
+
+typedef long long ll;
+
+void solve()
+{
+    int n, k, arr[5002], i, j, num, tmp[5002], id, total = 0;
+    cin>> n >> k;
+
+    memset(arr, 0, sizeof(arr));
+    for (i = 1; i <= n; i++) {
+        cin>> num;
+        tmp[i] = num;
+        arr[num] += 1;
+    }
+
+    bool found = true;
+    for (i = 1; i <= 5000; i++) {
+        if (arr[i] > k) {
+            found = false;
+            break;
+        }
+    }
+
+    if (!found) {
+        cout<< ""NO"" << ""\n"";
+        return;
+    }
+
+    cout<< ""YES"" << ""\n"";
+    int color[5001];
+    memset(color, 0, sizeof(color));
+
+    id = 1;
+    for (i = 1; i <= 5000; i++) {
+        // id = 1;
+        for (j = 1; j <= n; j++) {
+            if (color[j] == 0 && tmp[j] == i) {
+                color[j] = 1;
+                tmp[j] = id;
+                id++;
+                total++;
+
+                if (id > k)
+                    id = 1;
+            }
+        }
+
+        if (total == n)
+            break;
+    }
+
+    for (i = 1; i <= n; i++)
+        cout<< tmp[i] << "" "";
+    cout<< ""\n"";
+}
+
+int main()
+{
+    int t = 1;
+    // cin>> t;
+
+    while (t--)
+        solve();
+
+    return 0;
+}"
+https://codeforces.com/contest/988/problem/C,1400,"#include<bits/stdc++.h>
+using namespace std;
+
+struct triple {
+    int sum;
+    int id;
+    int index;
+};
+
+bool cmp(triple a, triple b) {
+    return (a.sum < b.sum);
+}
+
+triple T[200001];
+
+int main()
+{
+    int n, m, i, j, num, sum, cnt = 0;
+    //triple T[20005];
+    cin>> n;
+
+    for (i = 1; i <= n; i++) {
+        cin>> m;
+        int arr[m+5];
+        sum = 0;
+
+        for (j = 1; j <= m; j++) {
+            cin>> arr[j];
+            sum += arr[j];
+        }
+
+        for (j = 1; j <= m; j++) {
+            T[cnt].sum = sum-arr[j];
+            T[cnt].id = i;
+            T[cnt].index = j;
+            cnt++;
+        }
+    }
+
+    sort(T, T+cnt, cmp);
+    bool found = false;
+    for (i = 0; i < cnt-1; i++){
+        if (T[i].sum == T[i+1].sum && T[i].id != T[i+1].id) {
+            cout<< ""YES"" << ""\n"";
+            printf(""%d %d\n%d %d\n"", T[i].id, T[i].index, T[i+1].id, T[i+1].index);
+            found = true;
+            break;
+        }
+    }
+
+    if (!found)
+        cout<< ""NO"" << ""\n"";
+
+    return 0;
+}"
+https://codeforces.com/contest/977/problem/D,1400,"#include<bits/stdc++.h>
+using namespace std;
+
+typedef long long ll;
+
+void solve()
+{
+    int n, i, j;
+    ll arr[200], num;
+    int pre[200];
+    cin>> n;
+
+    memset(pre, 0, sizeof(pre));
+    for (i = 1; i <= n; i++) 
+        cin>> arr[i];
+
+    for (i = 1; i <= n; i++) {
+        num = arr[i];
+        if (num%3 == 0) {
+            for (j = 1; j <= n; j++) {
+                if (arr[j] == num/3) {
+                    pre[j] = 1;
+                    break;
+                }
+            }
+        }
+        
+        for (j = 1; j <= n; j++) {
+            if (arr[j] == num*2) {
+                pre[j] = 1;
+                break;
+            }
+        }
+    }
+
+    for (i = 1; i <= n; i++) {
+        if (pre[i] == 0) {
+            num = arr[i];
+            break;
+        }
+    }
+
+    cout<< num << "" "";
+    int cnt = 1;
+
+    while (cnt != n) {
+        for (i = 1; i <= n; i++) {
+            if ((num%3 == 0 && arr[i] == num/3) || (arr[i] == num*2)){
+                num = arr[i];
+                cout<< num << "" "";
+                cnt++;
+                break;
+            }
+        }
+    }
+    cout<< ""\n"";
+}
+
+int main()
+{
+    int t = 1;
+    // cin>> t;
+
+    while (t--)
+        solve();
+
+    return 0;
+}"
+https://codeforces.com/contest/978/problem/C,1000,"#include<bits/stdc++.h>
+using namespace std;
+
+typedef long long ll;
+ll arr[200005], tmp[200005], num;
+
+void solve()
+{
+    int n, m, i, j;
+    ll fi, se;
+    arr[0] = 0;
+    cin>> n >> m;
+
+    for (i = 1; i <= n; i++) {
+        cin>> num;
+        arr[i] = arr[i-1] + num;
+    }
+
+    for (i = 1; i <= m; i++)
+        cin>> tmp[i];
+
+    stack< pair<ll, ll> > s;
+    for (i = n; i >= 1; i--) {
+        s.push(make_pair(arr[i-1]+1, arr[i]));
+    }
+
+    bool found;
+    for (i = 1; i <= m; i++) {
+        num = tmp[i];
+
+        found = false;
+        while (!found) {
+            fi = s.top().first;
+            se = s.top().second;
+            if (num >= fi && num <= se) {
+                printf(""%d %lld\n"", n-s.size()+1, num-fi+1);
+                found = true;
+            }
+            else
+                s.pop();
+        }
+    }
+}
+
+int main()
+{
+    int t = 1;
+    //cin>> t;
+
+    while (t--)
+        solve();
+
+    return 0;
+}"
+https://codeforces.com/contest/1433/problem/C,900,"#include<bits/stdc++.h>
+using namespace std;
+
+typedef long long ll;
+
+void solve()
+{
+    int n, i, j, num, mx = -1, id = -1, arr[300005];
+    set<int> s;
+    cin>> n;
+
+    for (i = 1; i <= n; i++) {
+        cin>> num;
+        arr[i] = num;
+        s.insert(num);
+
+        if (num > mx) {
+            id = i;
+            mx = num;
+        }
+    }
+
+    // printf(""--- %d %d\n"", mx, id);
+
+    if (s.size() == 1) {
+        cout<< ""-1"" << ""\n"";
+        return;
+    }
+
+    id = -1;
+    for (i = 1; i < n; i++) {
+        if (arr[i] == mx && arr[i+1] != mx) {
+            id = i;
+            break;
+        }
+    }
+
+    for (i = n; i > 1; i--) {
+        if (arr[i] == mx && arr[i-1] != mx) {
+            id = i;
+            break;
+        }
+    }
+    cout<< id << ""\n"";
+}
+
+int main()
+{
+    int t = 1;
+    cin>> t;
+
+    while (t--)
+        solve();
+
+    return 0;
+}"
+https://codeforces.com/contest/1249/problem/B1,1000,"#include<bits/stdc++.h>
+using namespace std;
+
+typedef long long ll;
+
+void solve()
+{
+    int n, arr[2000], i, j;
+    cin>> n;
+
+    for (i = 1; i <= n; i++)
+        cin>> arr[i];
+
+    int cnt, id;
+    for (i = 1; i <= n; i++) {
+        cnt = 1;
+        id = i;
+        while (i != arr[id]) {
+            cnt++;
+            id = arr[id];
+        }
+        cout<< cnt << "" "";
+    }
+    cout<< ""\n"";
+}
+
+int main()
+{
+    int t = 1;
+    cin>> t;
+
+    while (t--)
+        solve();
+
+    return 0;
+}"
+https://codeforces.com/contest/1234/problem/B1,1000,"#include<bits/stdc++.h>
+using namespace std;
+
+typedef long long ll;
+
+void solve()
+{
+    int n, k, i, j, num, arr[400];
+    cin>> n >> k;
+    for (i = 1; i <= n; i++)
+        cin>> arr[i];
+
+    deque<int> q;
+    for (i = 1; i <= n; i++) {
+        deque<int> q_copy;
+        if (i == 1) {
+            q.push_front(arr[i]);
+            continue;
+        }
+        q_copy = q;
+        bool found = false;
+        while(!q_copy.empty()) {
+            if (q_copy.front() == arr[i]) {
+                found = true;
+                break;
+            }
+            q_copy.pop_front();
+        }
+
+        if (found)
+            continue;
+
+        if (q.size() < k)
+            q.push_front(arr[i]);
+        else {
+            q.pop_back();
+            q.push_front(arr[i]);
+        }
+
+    }
+
+    cout<< q.size() << ""\n"";
+    while (!q.empty()) {
+        cout<< q.front() << "" "";
+        q.pop_front();
+    }
+    cout<< ""\n"";
+}
+
+int main()
+{
+    int t = 1;
+    //cin>> t;
+
+    while (t--)
+        solve();
+
+    return 0;
+}"
+https://codeforces.com/contest/1165/problem/B,1000,"#include<bits/stdc++.h>
+using namespace std;
+
+typedef long long ll;
+
+void solve()
+{
+    int n, i, j, num;
+    priority_queue< int, vector<int>, greater<int> > pq;
+    cin>> n;
+    for (i = 1; i <= n; i++) {
+        cin>> num;
+        pq.push(num);
+    }
+
+    int d = 0;
+    for (i = 1; i <= n; i++) {
+        while (!pq.empty() && pq.top() < i)
+            pq.pop();
+
+        if (!pq.empty()) {
+            pq.pop();
+            d++;
+        }
+        else
+            break;
+    }
+    cout<< d << ""\n"";
+}
+
+int main()
+{
+    int t = 1;
+    //cin>> t;
+
+    while (t--)
+        solve();
+
+    return 0;
+}"
+https://codeforces.com/contest/1077/problem/B,1000,"#include<bits/stdc++.h>
+using namespace std;
+
+typedef long long ll;
+
+void solve()
+{
+    int n, i, j, arr[1000], prev = -1, s, e;
+    cin>> n;
+    for (i = 1; i <= n; i++)
+        cin>> arr[i];
+
+    int cnt = 0;
+    vector< pair<int, int> > v;
+    for (i = 2; i <= n-1; i++) {
+        s = i-1;
+        e = i+1;
+        if (arr[s] == 1 && arr[i] == 0 && arr[e] == 1) {
+            cnt++;
+            arr[e] = 0;
+        }
+    }
+    cout<< cnt << ""\n"";
+}
+
+int main()
+{
+    int t = 1;
+    //cin>> t;
+
+    while (t--)
+        solve();
+
+    return 0;
+}"
+https://codeforces.com/contest/1426/problem/B,900,"#include<bits/stdc++.h>
+using namespace std;
+
+typedef long long ll;
+
+void solve()
+{
+    int n, m, i, j, a, b, c, d;
+    bool found = false;
+    cin>> n >> m;
+
+    for (i = 0; i < n; i++) {
+        cin>> a >> b >> c >> d;
+        if (b == c) {
+            found = true;
+        }
+    }
+
+    if (m%2 == 1)
+        cout<< ""NO"" << ""\n"";
+    else {
+        if (!found)
+            cout<< ""NO"" << ""\n"";
+        else
+            cout<< ""YES"" << ""\n"";
+    }
+}
+
+int main()
+{
+    int t = 1;
+    cin>> t;
+
+    while (t--)
+        solve();
+
+    return 0;
+}"
+https://codeforces.com/contest/1283/problem/B,900,"#include<bits/stdc++.h>
+using namespace std;
+
+typedef long long ll;
+
+void solve()
+{
+    int n, k, i, j, x, y, rem;
+    cin>> n >> k;
+
+    x = n/k;
+    y = k/2;
+    rem = n%k;
+
+    cout<< x*k + min(rem, y) << ""\n"";
+}
+
+int main()
+{
+    int t = 1;
+    cin>> t;
+
+    while (t--)
+        solve();
+
+    return 0;
+}"
+https://codeforces.com/contest/1216/problem/B,900,"#include<bits/stdc++.h>
+using namespace std;
+
+typedef long long ll;
+
+struct shot {
+    int val, id;
+};
+
+bool cmp(shot a, shot b) {
+    return (a.val > b.val);
+}
+
+void solve()
+{
+    int n, num, i;
+    shot shots[2000];
+    cin>> n;
+
+    for (i = 0; i < n; i++) {
+        cin>> num;
+        shots[i].val = num;
+        shots[i].id = i+1;
+    }
+    sort(shots, shots+n, cmp);
+    ll sum = 0;
+    for (i = 0; i < n; i++) {
+        sum += (ll(shots[i].val * i) + 1);
+    }
+
+    cout<< sum << ""\n"";
+    for (i = 0; i < n; i++) {
+        printf(""%d "", shots[i].id);
+    }
+    cout<< ""\n"";
+}
+
+int main()
+{
+    int t = 1;
+    //cin>> t;
+
+    while (t--)
+        solve();
+
+    return 0;
+}"
+https://codeforces.com/contest/1183/problem/B,900,"#include<bits/stdc++.h>
+using namespace std;
+
+typedef long long ll;
+
+void solve()
+{
+    int n, k, i, j, f, s, hi, lo, mn = INT_MAX;
+    cin>> n >> k;
+    vector<int> arr(n);
+
+    for (i = 0; i < n; i++) {
+        cin>> arr[i];
+        mn = min(mn, arr[i]+k);
+    }
+    bool found = true;
+    for (i = 0; i < n; i++) {
+        if (int(abs(arr[i] - mn)) > k) {
+            found = false;
+            break;
+        }
+    }
+
+    if (found)
+        cout<< mn << ""\n"";
+    else
+        cout<< ""-1"" << ""\n"";
+}
+
+int main()
+{
+    int t = 1;
+    cin>> t;
+
+    while (t--)
+        solve();
+
+    return 0;
+}"
+https://codeforces.com/contest/1015/problem/B,1200,"#include<bits/stdc++.h>
+using namespace std;
+
+typedef long long ll;
+
+void solve()
+{
+    int n, i, j, k;
+    string s, s2, a, b;
+    cin>> n >> s >> s2;
+
+    a = s;
+    b = s2;
+    sort(a.begin(), a.end());
+    sort(b.begin(), b.end());
+    if (a != b) {
+        cout<< -1 << ""\n"";
+        return;
+    }
+
+    if (s == s2) {
+        cout<< 0 << ""\n"";
+        return;
+    }
+
+    vector<int> v;
+    char ch;
+    for (i = 0; i < n; i++) {
+        if (s[i] == s2[i])
+            continue;
+
+        for (j = i+1; j < n; j++) {
+            if (s2[i] == s[j] && s2[j] != s[j]) {
+                for (k = j; k > i; k--) {
+                    ch = s[k-1];
+                    s[k-1] = s[k];
+                    s[k] = ch;
+                    v.push_back(k);
+                }
+            }
+        }
+    }
+
+    cout<< v.size() << ""\n"";
+    for (i = 0; i < v.size(); i++)
+        cout<< v[i] << "" "";
+    cout<< ""\n"";
+}
+
+int main()
+{
+    int t = 1;
+    //cin>> t;
+
+    while (t--)
+        solve();
+
+    return 0;
+}"
+https://codeforces.com/contest/1006/problem/B,1200,"#include<bits/stdc++.h>
+using namespace std;
+
+typedef long long ll;
+
+void solve()
+{
+    int n, k, i, j, arr[2005], val;
+    vector<int> v;
+    cin>> n >> k;
+
+    for (i = 1; i <= n; i++) {
+        cin>> arr[i];
+        v.push_back(arr[i]);
+    }
+
+    sort(v.begin(), v.end(), greater<int>());
+    map<int, int> mp;
+    ll sum = 0;
+    for (i = 0; i < k; i++)
+    {
+        val = v[i];
+        mp[val]++;
+        sum += ll(val);
+    }
+
+    cout<< sum << ""\n"";
+    int prev = 0;
+    int cnt = 0;
+
+    for (i = 1; i <= n; i++) {
+        val = arr[i];
+        if (mp[val] > 0) {
+            cnt++;
+            if (cnt == k)
+                cout<< n-prev << ""\n"";
+            else
+                cout<< i-prev << "" "";
+            prev = i;
+            mp[val]--;
+        }
+    }
+}
+
+int main()
+{
+    int t = 1;
+    //cin>> t;
+
+    while (t--)
+        solve();
+
+    return 0;
+}"
+https://codeforces.com/contest/1144/problem/B,900,"#include<bits/stdc++.h>
+using namespace std;
+
+typedef long long ll;
+
+void solve()
+{
+    int n, num, i, j, x, y;
+    vector<int> a, b;
+    cin>> n;
+    for (i = 0; i < n; i++) {
+        cin>> num;
+        if (num%2 == 0)
+            a.push_back(num);
+        else
+            b.push_back(num);
+    }
+    sort(a.begin(), a.end(), greater<int>());
+    sort(b.begin(), b.end(), greater<int>());
+    if (a.size() == b.size()) {
+        cout<< 0 << ""\n"";
+        return;
+    }
+
+    x = a.size();
+    y = b.size();
+
+    ll cnt = 0;
+    if (x > y) {
+        for (i = y+1; i < x; i++)
+            cnt += ll(a[i]);
+        cout<< cnt << ""\n"";
+    } else {
+        for (i = x+1; i < y; i++)
+            cnt += ll(b[i]);
+        cout<< cnt << ""\n"";
+    }
+}
+
+int main()
+{
+    int t = 1;
+    //cin>> t;
+
+    while (t--)
+        solve();
+
+    return 0;
+}"
+https://codeforces.com/contest/1141/problem/B,900,"#include<bits/stdc++.h>
+using namespace std;
+
+typedef long long ll;
+
+void solve()
+{
+    int n, i, j, mx = 0, cnt;
+    cin>> n;
+    vector<int> arr(n);
+
+    for (i = 0; i < n; i++)
+        cin>> arr[i];
+    
+    cnt = 0;
+    for (i = 0; i < n; i++)
+    {
+        if (arr[i] == 0) {
+            mx = max(mx, cnt);
+            cnt = 0;
+        }
+        else
+            cnt++;
+    }
+    mx = max(cnt, mx);
+
+    int cnt1, cnt2;
+    cnt2 = cnt1 = 0;
+
+    for (i = 0; i < n; i++) {
+        if (arr[i] == 1) {
+            cnt1++;
+        }
+        else
+            break;
+    }
+
+    for (i = n-1; i >= 0; i--) {
+        if (arr[i] == 1)
+            cnt2++;
+        else
+            break;
+    }
+
+    cout<< max(mx, cnt1+cnt2) << ""\n"";
+}
+
+int main()
+{
+    int t = 1;
+    //cin>> t;
+
+    while (t--)
+        solve();
+
+    return 0;
+}"
+https://codeforces.com/contest/1095/problem/B,900,"#include<bits/stdc++.h>
+using namespace std;
+
+typedef long long ll;
+
+void solve()
+{
+    int n, i, j;
+    cin>> n;
+    vector<int> v(n);
+
+    for (i = 0; i < n; i++)
+        cin>> v[i];
+    sort(v.begin(), v.end());
+    if (n == 2) {
+        cout<< 0 << ""\n"";
+    }
+    else {
+        n -= 1;
+        cout<< min(v[n-1]-v[0], v[n]-v[1]) << ""\n"";
+    }
+}
+
+int main()
+{
+    int t = 1;
+    //cin>> t;
+
+    while (t--)
+        solve();
+
+    return 0;
+}"
+https://codeforces.com/contest/1005/problem/B,900,"#include<bits/stdc++.h>
+using namespace std;
+
+typedef long long ll;
+
+void solve()
+{
+    int n, m, i, j;
+    string a, b;
+    cin>> a >> b;
+
+    n = a.size() - 1;
+    m = b.size() - 1;
+
+    for (i = n, j = m; i >= 0 && j >= 0; i--, j--)
+    {
+        if (a[i] != b[j])
+            break;
+    }
+    cout<< i+j+2 << ""\n"";
+}
+
+int main()
+{
+    int t = 1;
+    //cin>> t;
+
+    while (t--)
+        solve();
+
+    return 0;
+}"
+https://codeforces.com/contest/999/problem/B,900,"#include<bits/stdc++.h>
+using namespace std;
+
+typedef long long ll;
+
+void solve()
+{
+    int n, i, j, k;
+    char tmp;
+    string s;
+    vector<int> v;
+    cin>> n >> s;
+
+    for (i = 2; i <= n; i++) {
+        if (n%i == 0)
+            v.push_back(i);
+    }
+
+    for (k = 0; k < v.size(); k++) {
+        j = v[k];
+        string x = """";
+        for (i = 1; i <= j; i++)
+            x += s[i-1];
+
+        int y = 0;
+        for (j = v[k]; j >= 1; j--, y++)
+            s[y] = x[j-1];
+    }
+    cout<< s << ""\n"";
+}
+
+int main()
+{
+    int t = 1;
+    //cin>> t;
+
+    while (t--)
+        solve();
+
+    return 0;
+}"
+https://codeforces.com/contest/977/problem/C,1200,"#include<bits/stdc++.h>
+using namespace std;
+
+typedef long long ll;
+
+void solve()
+{
+    int n, k, i, j, arr[200005];
+    cin>> n >> k;
+
+    for (i = 0; i < n; i++)
+        cin>> arr[i];
+
+    sort(arr, arr+n);
+    if (k == n) {
+        cout<< arr[n-1] << ""\n"";
+        return;
+    } else if (k == 0) {
+        if (arr[0] == 1)
+            cout<< ""-1"" << ""\n"";
+        else
+            cout<< arr[0]-1 << ""\n"";
+        return;
+    }
+
+    if (arr[k-1] != arr[k]) {
+        cout<< arr[k-1] << ""\n"";
+    }
+    else
+        cout<< ""-1"" << ""\n"";
+}
+
+int main()
+{
+    int t = 1;
+    //cin>> t;
+
+    while (t--)
+        solve();
+
+    return 0;
+}"
+https://codeforces.com/contest/1765/problem/B,800,"#include<bits/stdc++.h>
+using namespace std;
+
+typedef long long ll;
+
+void solve()
+{
+    int n, i, j;
+    string s;
+    cin>> n >> s;
+
+    s = s + ""A"";
+    s = s + ""A"";
+    bool found = true;
+     for (i = 0; i < n; i += 3) {
+         if (s[i+1] != s[i+2]) {
+             found = false;
+             break;
+         }
+     }
+    if (found)
+        cout<< ""YES"" << ""\n"";
+    else
+        cout<< ""NO"" << ""\n"";
+}
+
+int main()
+{
+    int t = 1;
+    cin>> t;
+
+    while (t--)
+        solve();
+
+    return 0;
+}"
+https://codeforces.com/contest/1764/problem/B,900,"#include<bits/stdc++.h>
+using namespace std;
+
+typedef long long ll;
+
+void solve()
+{
+    int n, i, j, arr[100005], g = 0;
+    cin>> n;
+
+    for (i = 1; i <= n; i++) {
+        cin>> arr[i];
+        g = __gcd(g, arr[i]);
+    }
+
+    cout<< arr[n]/g << ""\n"";
+}
+
+int main()
+{
+    int t = 1;
+    cin>> t;
+
+    while (t--)
+        solve();
+
+    return 0;
+}"
+https://codeforces.com/contest/1764/problem/A,800,"#include<bits/stdc++.h>
+using namespace std;
+
+typedef long long ll;
+
+void solve()
+{
+    int n, i, j, arr[200000];
+    cin>> n;
+
+    for (i = 1; i <= n; i++)
+        cin>> arr[i];
+
+    cout<< 1 << "" "" << n << ""\n"";
+}
+
+int main()
+{
+    int t = 1;
+    cin>> t;
+
+    while (t--)
+        solve();
+
+    return 0;
+}"
+https://codeforces.com/contest/1758/problem/B,900,"#include<bits/stdc++.h>
+using namespace std;
+
+typedef long long ll;
+
+void solve()
+{
+    ll n, rem, div;
+    ll i;
+    cin>> n;
+
+    if (n%2 == 1) {
+        for (i = 1; i <= n; i++)
+            cout<< n << "" "";
+        cout<< ""\n"";
+        return;
+    }
+    else if (n == 2) {
+        cout<< 1 << "" "" << n+1 << ""\n"";
+        return;
+    }
+
+    cout<< 1 << "" "" << n+1 << "" "";
+    rem = n*n - (n+2);
+
+    if (n > 2)
+        div = rem/(n-2);
+
+    for (i = 1; i <= n-2; i++)
+        cout<< div << "" "";
+    cout<< ""\n"";
+}
+
+int main()
+{
+    int t = 1;
+    cin>> t;
+
+    while (t--)
+        solve();
+
+    return 0;
+}"
+https://codeforces.com/contest/1758/problem/A,800,"#include<bits/stdc++.h>
+using namespace std;
+
+typedef long long ll;
+
+void solve()
+{
+    int arr[26], i, j, id;
+    string s, ans = """";
+    cin>> s;
+
+    sort(s.begin(), s.end());
+    cout<< s;
+    for (i = s.size()-1; i >= 0; i--)
+        cout<< s[i];
+    cout<< ""\n"";
+}
+
+int main()
+{
+    int t = 1;
+    cin>> t;
+
+    while (t--)
+        solve();
+
+    return 0;
+}"
+https://codeforces.com/contest/1760/problem/E,1100,"#include<bits/stdc++.h>
+using namespace std;
+
+typedef long long ll;
+
+void solve()
+{
+    int n, arr[200005], i, j, k, last_1 = -1, first_0 = -1;
+    ll ans1 = 0, ans2 = 0, ans3 = 0;
+    cin>> n;
+
+    for (i = 1; i <= n; i++) {
+        cin>> arr[i];
+        if (arr[i] == 1) 
+            last_1 = i;
+    }
+
+    for (i = 1; i <= n; i++) {
+        if (arr[i] == 0) {
+            first_0 = i;
+            break;
+        }
+    }
+
+    ans1 = 0;
+    k = 0;
+    for (i = 1; i <= n; i++) {
+        if (arr[i] == 1)
+            k++;
+        else
+            ans1 += k;
+    }
+
+    if (first_0 != -1) {
+        arr[first_0] = 1;
+        k = 0;
+        ans2 = 0;
+
+        for (i = 1; i <= n; i++) {
+            if (arr[i] == 1)
+                k++;
+            else
+                ans2 += k;
+        }
+        arr[first_0] = 0;
+    }
+
+    if (last_1 != -1) {
+        arr[last_1] = 0;
+        k = 0;
+        ans3 = 0;
+
+        for (i = 1; i <= n; i++) {
+            if (arr[i] == 1)
+                k++;
+            else
+                ans3 += k;
+        }
+
+        arr[last_1] = 1;
+    }
+
+    ll tmp = max(ans1, ans2);
+    cout<< max(tmp, ans3) << ""\n"";
+
+}
+
+int main()
+{
+    int t = 1;
+    cin>> t;
+
+    while (t--)
+        solve();
+
+    return 0;
+}"
+https://codeforces.com/contest/1761/problem/B,1100,"#include<bits/stdc++.h>
+using namespace std;
+
+typedef long long ll;
+
+void solve()
+{
+    int n, i, j, m, num;
+    set<int> s;
+    cin>> n;
+
+    for (i = 0; i < n; i++) {
+        cin>> num;
+        s.insert(num);
+    }
+
+    if (s.size() <= 2)
+        cout<< n/2 + 1 << ""\n"";
+    else
+        cout<< n << ""\n"";
+}
+
+int main()
+{
+    int t = 1;
+    cin>> t;
+
+    while (t--)
+        solve();
+
+    return 0;
+}"
+https://codeforces.com/contest/1761/problem/A,800,"#include<bits/stdc++.h>
+using namespace std;
+
+typedef long long ll;
+
+void solve()
+{
+    int n, a, b, i, j, rem;
+    cin>> n >> a >> b;
+
+    if (a == b && b == n) {
+        cout<< ""YES"" << ""\n"";
+        return;
+    }
+
+    if (n-a-b >= 2)
+        cout<< ""YES"" << ""\n"";
+    else
+        cout<< ""NO"" << ""\n"";
+}
+
+int main()
+{
+    int t = 1;
+    cin>> t;
+
+    while (t--)
+        solve();
+
+    return 0;
+}"
+https://codeforces.com/contest/1760/problem/D,1000,"#include<bits/stdc++.h>
+using namespace std;
+
+typedef long long ll;
+
+void solve()
+{
+    int n, num, arr[200005], i, j, m, cnt;
+    cin>> n;
+
+    for (i = 1; i <= n; i++) {
+        cin>> arr[i];
+    }
+
+    vector<int> v;
+    v.push_back(INT_MAX);
+
+    for (i = 1; i <= n; i++) {
+        if (v.back() != arr[i])
+            v.push_back(arr[i]);
+
+    }
+    v.push_back(INT_MAX);
+    m = v.size();
+    cnt = 0;
+
+    for (i = 1; i < m-1; i++) {
+        if (v[i] < v[i-1] && v[i] < v[i+1])
+            cnt++;
+    }
+
+    if (cnt == 1)
+        cout<< ""YES"" << ""\n"";
+    else
+        cout<< ""NO"" << ""\n"";
+}
+
+int main()
+{
+    int t = 1;
+    cin>> t;
+
+    while (t--)
+        solve();
+
+    return 0;
+}"
+https://codeforces.com/contest/1760/problem/C,800,"#include<bits/stdc++.h>
+using namespace std;
+
+typedef long long ll;
+
+void solve()
+{
+    int n, i, j, arr[200005], f, s;
+    priority_queue<int> pq;
+
+    cin>> n;
+    for (i = 1; i <= n; i++) {
+        cin>> arr[i];
+        pq.push(arr[i]);
+    }
+
+    for (i = 1; i <= n; i++) {
+        f = pq.top();
+
+        if (f != arr[i]) {
+            cout<< arr[i] - f << "" "";
+            continue;
+        } 
+        else
+        {
+            pq.pop();
+            s = pq.top();
+            cout<< arr[i] - s << "" "";
+            pq.push(f);
+        }
+    }
+    cout<< ""\n"";
+}
+
+int main()
+{
+    int t = 1;
+    cin>> t;
+
+    while (t--)
+        solve();
+
+    return 0;
+}"
+https://codeforces.com/contest/1760/problem/B,800,"#include<bits/stdc++.h>
+using namespace std;
+
+typedef long long ll;
+
+void solve()
+{
+    int arr[30], i, j, id, n;
+    string s;
+
+    cin>> n >> s;
+    memset(arr, 0, sizeof(arr));
+    for (i = 0; i < n; i++) {
+        id = s[i] - 'a' + 1;
+        arr[id] = 1;
+    }
+
+    for (i = 26; i >= 1; i--) {
+        if (arr[i] == 1) {
+            cout<< i << ""\n"";
+            break;
+        }
+    }
+}
+
+int main()
+{
+    int t = 1;
+    cin>> t;
+
+    while (t--)
+        solve();
+
+    return 0;
+}"
+https://codeforces.com/contest/1760/problem/A,800,"#include<bits/stdc++.h>
+using namespace std;
+
+typedef long long ll;
+
+void solve()
+{
+    int n, i, j, num;
+    vector<int> v;
+
+    for (i = 0; i < 3; i++) {
+        cin>> num;
+        v.push_back(num);
+    }
+    sort(v.begin(), v.end());
+    cout<< v[1] << ""\n"";
+}
+
+int main()
+{
+    int t = 1;
+    cin>> t;
+
+    while (t--)
+        solve();
+
+    return 0;
+}"
+https://codeforces.com/contest/1676/problem/D,1000,"#include<bits/stdc++.h>
+using namespace std;
+
+typedef long long ll;
+
+void solve()
+{
+    ll arr[201][201], rev[201][201], dia1[201][201], dia2[201][201], num, s1, s2, ans, val;
+    int i, j, n, m, k, l;
+    cin>> n >> m;
+
+    for (i = 0, k = n-1; i < n; i++, k--) {
+        for (j = 0, l = m-1; j < m; j++, l--) {
+            cin>> num;
+            arr[i][j] = num;
+        }
+    }
+
+
+    ll sum[500], sum2[500];
+    memset(sum, 0, sizeof(sum));
+    map<ll, ll> mp;
+
+    for (i = 0; i < n; i++) {
+        for (j = 0; j < m; j++) {
+            sum[i+j] += arr[i][j];
+            mp[i-j] += arr[i][j];
+        }
+    }
+
+    for (i = 0; i < n; i++) {
+        for (j = 0; j < m; j++) {
+            dia1[i][j] = sum[i+j];
+            dia2[i][j] = mp[i-j];
+        }
+    }
+
+    ans = -1;
+    for (i = 0; i < n; i++) {
+        for (j = 0; j < m; j++) {
+            val = dia1[i][j] + dia2[i][j] - arr[i][j];
+            ans = max(ans, val);
+        }
+    }
+    cout<< ans << ""\n"";
+
+}
+
+int main()
+{
+    int t = 1;
+    cin>> t;
+
+    while (t--)
+        solve();
+
+    return 0;
+}"
+https://codeforces.com/contest/1759/problem/B,800,"#include<bits/stdc++.h>
+using namespace std;
+
+typedef long long ll;
+
+void solve()
+{
+    int n, sum, arr[50000], num, total = 0, i, last, j, large = -1;
+    cin>> n >> sum;
+
+    memset(arr, 0, sizeof(arr));
+    for (i = 0; i < n; i++) {
+        cin>> num;
+        large = max(large, num);
+        arr[num] = 1;
+    }
+
+    for (i = large; i >= 1; i--) {
+        if (arr[i] == 0)
+            total += i;
+    }
+
+    if (total == sum)
+    {
+        cout<< ""YES"" << ""\n"";
+        return;
+    }
+
+    bool found = false;
+    for (i = large+1; i <= 10000; i++) {
+        total += i;
+        if (total < sum)
+            continue;
+
+        if (total == sum) {
+            found = true;
+        }
+        break;
+    }
+
+    if (found)
+        cout<< ""YES"" << ""\n"";
+    else
+        cout<< ""NO"" << ""\n"";
+}
+
+int main()
+{
+    // ios_base::sync_with_stdio(0);
+    // cin.tie(0);
+    int t = 1;
+    cin>> t;
+
+    while (t--)
+        solve();
+
+    return 0;
+}"
+https://codeforces.com/contest/1759/problem/A,800,"#include<bits/stdc++.h>
+using namespace std;
+
+typedef long long ll;
+
+void solve()
+{
+    int n, m, i, j;
+    string a, s, b;
+    a = """";
+
+    for (i = 0; i < 100; i++) {
+        a += ""Yes"";
+    }
+
+    cin>> s;
+    m = a.size();
+    n = s.size();
+    bool found = false;
+    for (i = 0; i < m-n; i++) 
+    {
+        b = a.substr(i, n);
+        if (b == s) {
+            found = true;
+            break;
+        }
+    }
+
+    if (found)
+        cout<< ""YES"" << ""\n"";
+    else
+        cout<< ""NO"" << ""\n"";
+}
+
+int main()
+{
+    ios_base::sync_with_stdio(0);
+    cin.tie(0);
+    int t = 1;
+    cin>> t;
+
+    while (t--)
+        solve();
+
+    return 0;
+}"
+https://codeforces.com/contest/1750/problem/A,800,"#include<bits/stdc++.h>
+using namespace std;
+
+typedef long long ll;
+
+void solve()
+{
+    int n, i, j, k, arr[20], tmp;
+    cin>> n;
+
+    for (i = 1; i <= n; i++)
+        cin>> arr[i];
+
+    if (arr[1] == 1)
+        cout<< ""YES"" << ""\n"";
+    else
+        cout<< ""NO"" << ""\n"";
+}
+
+int main()
+{
+    ios_base::sync_with_stdio(0);
+    cin.tie(0);
+    int t = 1;
+    cin>> t;
+
+    while (t--)
+        solve();
+
+    return 0;
+}"
+https://codeforces.com/contest/1658/problem/B,800,"#include<bits/stdc++.h>
+#define m 998244353
+using namespace std;
+
+typedef long long ll;
+
+void solve()
+{
+    ll n, i, ans1;
+    cin>> n;
+
+    if (n%2 == 1) {
+        cout<< ""0"" << ""\n"";
+        return;
+    }
+
+    n /= 2;
+    ans1 = 1;
+    for (i = 1; i <= n; i++)
+    {
+        ans1 = (ans1*i)%m;
+    }
+    cout<< (ans1*ans1)%m << ""\n"";
+}
+
+int main()
+{
+    ios_base::sync_with_stdio(0);
+    cin.tie(0);
+    int t = 1;
+    cin>> t;
+
+    while (t--)
+        solve();
+
+    return 0;
+}"
+https://codeforces.com/contest/1748/problem/B,1400,"#include<bits/stdc++.h>
+using namespace std;
+
+typedef long long ll;
+
+void solve()
+{
+    int n, i, j, ans = 0, distinct, mx, val;
+    string s;
+    cin>> n >> s;
+
+    for (i = 0; i < n; i++) {
+        distinct = mx = 0;
+        vector<int> v(10, 0);
+
+        for (j = i; j < min(n, i+100); j++) {
+            val = s[j] - '0';
+            if (v[val] == 0)
+                distinct++;
+
+            v[val]++;
+            mx = max(mx, v[val]);
+            if (distinct >= mx)
+                ans++;
+        }
+    }
+    cout<< ans << ""\n"";
+}
+
+int main()
+{
+    ios_base::sync_with_stdio(0);
+    cin.tie(0);
+    int t = 1;
+    cin>> t;
+
+    while (t--)
+        solve();
+
+    return 0;
+}"
+https://codeforces.com/contest/1748/problem/A,800,"#include<bits/stdc++.h>
+using namespace std;
+
+void solve()
+{
+    int n, ans;
+    cin>> n;
+    ans = int(ceil(n/2.0));
+    cout<< ans << ""\n"";
+}
+
+int main()
+{
+    int t = 1;
+    cin>> t;
+
+    while (t--)
+    {
+        solve();
+    }
+
+    return 0;
+}"
+https://codeforces.com/contest/1754/problem/B,800,"#include<bits/stdc++.h>
+using namespace std;
+
+typedef long long ll;
+
+void solve()
+{
+    int n, m, i, j, f, s;
+    cin>> n;
+
+    if (n%2 == 1) 
+        m = n-1;
+    else
+        m = n;
+
+    f = m/2;
+    s = m;
+
+    while (f > 0 && s > 0) {
+        cout<< f << "" "" << s << "" "";
+        f--;
+        s--;
+    }
+
+    if (n%2 == 1)
+        cout<< n << "" "";
+    cout<< ""\n"";
+}
+
+int main()
+{
+    int t = 1;
+    cin>> t;
+
+    while (t--)
+        solve();
+
+    return 0;
+}"
+https://codeforces.com/contest/1750/problem/B,800,"#include<bits/stdc++.h>
+using namespace std;
+
+typedef long long ll;
+
+void solve()
+{
+    int n, i, j, cnt0, cnt1, tmp_cnt;
+    ll ans, x, y, ans1;
+    string s;
+    cin>> n >> s;
+
+    cnt0 = cnt1 = 0;
+    for (i = 0; i < n; ) {
+        if (s[i] == '1') {
+            tmp_cnt = 0;
+            for (j = i; j < n; j++) {
+                if (s[j] == '1')
+                    tmp_cnt++;
+                else
+                    break;
+            }
+
+            cnt1 = max(cnt1, tmp_cnt);
+            i = j;
+        }
+        else
+            i++;
+    }
+
+    for (i = 0; i < n; ) {
+        if (s[i] == '0') {
+            tmp_cnt = 0;
+            for (j = i; j < n; j++) {
+                if (s[j] == '0')
+                    tmp_cnt++;
+                else
+                    break;
+            }
+
+            cnt0 = max(cnt0, tmp_cnt);
+            i = j;
+        }
+        else
+            i++;
+    }
+
+    x = ll(cnt0) * ll(cnt0);
+    y = ll(cnt1) * ll(cnt1);
+    ans = max(x, y);
+
+    cnt0 = cnt1 = 0;
+    for (i = 0; i < n; i++) {
+        if (s[i] == '0')
+            cnt0++;
+        else
+            cnt1++;
+    }
+
+    ans1 = ll(cnt0) * ll(cnt1);
+    ans = max(ans, ans1);
+    cout<< ans << ""\n"";
+}
+
+int main()
+{
+    int t = 1;
+    cin>> t;
+
+    while (t--)
+        solve();
+
+    return 0;
+}"
+https://codeforces.com/contest/1736/problem/B,1200,"#include<bits/stdc++.h>
+using namespace std;
+
+typedef long long ll;
+
+ll gcd(ll a, ll b)
+{
+    ll tmp;
+    while (b != 0)
+    {
+        tmp = a;
+        a = b;
+        b = tmp%b;
+    }
+    return a;
+}
+
+void solve()
+{
+    int n, i, j;
+    ll arr[100005], num, lcm, g, b[100005];
+    cin>> n;
+
+    for (i = 1; i <= n; i++)
+        cin>> arr[i];
+
+    arr[0] = arr[n+1] = 1;
+    for (i = 1; i <= n+1; i++) {
+        g = gcd(arr[i-1], arr[i]);
+        b[i] = (arr[i-1]*arr[i])/g;
+    }
+
+    bool found = true;
+    for (i = 1; i <= n; i++) {
+        g = gcd(b[i], b[i+1]);
+        if (g != arr[i]) {
+            found = false;
+            break;
+        }
+    }
+
+    if (found)
+        cout<< ""YES"" << ""\n"";
+    else
+        cout<< ""NO"" << ""\n"";
+}
+
+int main()
+{
+    int t = 1;
+    cin>> t;
+
+    while (t--)
+        solve();
+
+    return 0;
+}"
+https://codeforces.com/contest/1740/problem/B,800,"#include<bits/stdc++.h>
+using namespace std;
+
+typedef long long ll;
+
+void solve()
+{
+    ll a, b, mx = -1, sum = 0, mx1;
+    int n, i, j;
+    cin>> n;
+
+    for (i = 0; i < n; i++) {
+        cin>> a >> b;
+        sum += min(a, b);
+        mx1 = max(a, b);
+        mx = max(mx, mx1);
+    }
+    cout<< 2*(mx+sum) << ""\n"";
+}
+
+int main()
+{
+    int t = 1;
+    cin>> t;
+
+    while (t--)
+        solve();
+
+    return 0;
+}"
+https://codeforces.com/contest/1740/problem/A,800,"#include<bits/stdc++.h>
+using namespace std;
+
+typedef long long ll;
+
+void solve()
+{
+    int n;
+    cin>> n;
+
+    cout<< n << ""\n"";
+}
+
+int main()
+{
+    int t = 1;
+    cin>> t;
+
+    while (t--)
+        solve();
+
+    return 0;
+}"
